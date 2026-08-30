@@ -618,13 +618,14 @@ body{
       </div>
       <p class="name" id="profile-name">Mahdi Shabani</p>
       <p class="role">Let's connect</p>
-      <div class="icon-row">
+      <div class="icon-row" style="position:relative;">
         <a class="icon-link" id="profile-linkedin" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8.25h4.5V23H.24V8.25zM8.5 8.25h4.31v2.02h.06c.6-1.13 2.07-2.33 4.26-2.33 4.55 0 5.39 3 5.39 6.9V23h-4.5v-6.73c0-1.6-.03-3.67-2.24-3.67-2.24 0-2.58 1.75-2.58 3.55V23H8.5V8.25z"/></svg>
         </a>
         <a class="icon-link" id="profile-email" href="#" aria-label="Email">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 6 9 7 9-7"/></svg>
         </a>
+        <span id="email-copied-tip" style="position:absolute; bottom:-28px; left:50%; transform:translateX(-50%); font-size:.72rem; color:var(--slate); background:var(--paper); border:1px solid var(--hairline); border-radius:8px; padding:3px 10px; opacity:0; pointer-events:none; transition:opacity .25s ease; white-space:nowrap;">Copied!</span>
       </div>
     </div>
 
@@ -672,7 +673,7 @@ body{
       <h2>Get in Touch</h2>
       <p>Fill this out and it will open in your email app, ready to send.</p>
     </div>
-    <form class="contact-box" id="contact-form" action="#" method="post" enctype="text/plain">
+    <form class="contact-box" id="contact-form">
       <div class="form-row">
         <label for="cf-name">Name</label>
         <input id="cf-name" name="Name" type="text" required>
@@ -689,7 +690,11 @@ body{
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="15" height="15"><path d="m3 6 9 7 9-7M3 6h18v12H3z"/></svg>
         Send message
       </button>
-      <p class="form-note">This opens your default email app — it doesn't send silently in the background.</p>
+      <p class="form-note">
+        This opens your default email app.
+        اگه چیزی باز نشد، آدرس ایمیل رو
+        <a href="#" id="copy-email-fallback" style="color:var(--graphite); text-decoration:underline;">اینجا کپی کن</a>.
+      </p>
     </form>
   </section>
 
@@ -758,10 +763,41 @@ document.addEventListener('DOMContentLoaded', async () => {
   if(p.linkedin) li.href = p.linkedin;
 
   const em = document.getElementById('profile-email');
-  if(p.email) em.href = 'mailto:' + p.email;
+  const copyTip = document.getElementById('email-copied-tip');
+  if(p.email){
+    em.href = 'mailto:' + p.email;
+    em.addEventListener('click', () => {
+      navigator.clipboard?.writeText(p.email).then(() => {
+        if(copyTip){
+          copyTip.style.opacity = '1';
+          setTimeout(() => { copyTip.style.opacity = '0'; }, 1800);
+        }
+      }).catch(() => {});
+    });
+  }
 
   const form = document.getElementById('contact-form');
-  if(form && p.email) form.action = 'mailto:' + p.email;
+  const copyFallback = document.getElementById('copy-email-fallback');
+  if(form && p.email){
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('cf-name').value;
+      const from = document.getElementById('cf-email').value;
+      const msg = document.getElementById('cf-message').value;
+      const subject = encodeURIComponent('Message from ' + name + ' via website');
+      const body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + from + ')');
+      window.location.href = `mailto:${p.email}?subject=${subject}&body=${body}`;
+    });
+  }
+  if(copyFallback && p.email){
+    copyFallback.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.clipboard?.writeText(p.email).then(() => {
+        copyFallback.textContent = 'کپی شد ✓';
+        setTimeout(() => { copyFallback.textContent = 'اینجا کپی کن'; }, 1800);
+      }).catch(() => {});
+    });
+  }
 
   // Skills
   const skillsRow = document.getElementById('skills-row');

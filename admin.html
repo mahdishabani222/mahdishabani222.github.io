@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Content Manager — Mahdi Shabani</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600&family=Inter:wght@400;500;600&family=Vazirmatn:wght@400;500;600&display=swap');
+
+:root{
+  --ivory:    #FAF9F6;
+  --paper:    #FFFFFF;
+  --graphite: #1E1F22;
+  --slate:    #6E7075;
+  --hairline: #E7E6E1;
+  --silver-a: #C7CBD1;
+  --silver-c: #B7BBC1;
+  --shadow:   0 1px 2px rgba(30,31,34,.04), 0 12px 32px -16px rgba(30,31,34,.14);
+  --font-display: 'Cormorant Garamond', 'Vazirmatn', serif;
+  --font-body: 'Inter', 'Vazirmatn', sans-serif;
+  --radius-lg: 20px;
+  --radius-sm: 10px;
+}
+*{ box-sizing: border-box; }
+body{
+  margin: 0;
+  background: var(--ivory);
+  color: var(--graphite);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap{ max-width: 760px; margin: 0 auto; padding: 40px 24px 100px; }
+
+.admin-header{ margin-bottom: 8px; }
+.admin-header h1{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 0 0 6px;
+}
+.admin-header p{ color: var(--slate); margin: 0 0 30px; font-size: .92rem; line-height: 1.6; }
+
+.status-bar{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  font-size: .84rem;
+  color: var(--slate);
+  margin-bottom: 30px;
+}
+.status-bar.ok{ border-color: #B7D8C4; background: #F2FAF5; color: #2F6B45; }
+.status-bar.warn{ border-color: #E8D6A8; background: #FBF6E9; color: #8A6A1E; }
+
+.card{
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 26px 26px 10px;
+  margin-bottom: 22px;
+}
+.card h2{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin: 0 0 4px;
+}
+.card > p.hint{ color: var(--slate); font-size: .82rem; margin: 0 0 20px; }
+
+.field{ margin-bottom: 16px; }
+.field label{
+  display: block;
+  font-size: .78rem;
+  color: var(--slate);
+  margin-bottom: 6px;
+  letter-spacing: .02em;
+}
+.field input,
+.field textarea{
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--hairline);
+  background: var(--ivory);
+  color: var(--graphite);
+  font-family: var(--font-body);
+  font-size: .92rem;
+  resize: vertical;
+}
+.field textarea.fa-input,
+.field input.fa-input{ direction: rtl; font-family: 'B Nazanin','Vazirmatn',Tahoma,sans-serif; }
+.field input:focus,
+.field textarea:focus{ outline: none; border-color: var(--silver-c); }
+
+.repeat-item{
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  padding: 16px 16px 4px;
+  margin-bottom: 14px;
+  position: relative;
+  background: var(--ivory);
+}
+.repeat-item .remove-btn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  color: var(--slate);
+  cursor: pointer;
+  font-size: .8rem;
+  line-height: 1;
+}
+.repeat-item .remove-btn:hover{ color: #B23A3A; border-color: #E3B8B8; }
+
+.chip-row{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.chip{
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--ivory);
+  font-size: .82rem;
+}
+.chip button{
+  border: none; background: none; cursor: pointer;
+  color: var(--slate); font-size: .9rem; line-height: 1; padding: 2px;
+}
+.chip-add{ display: flex; gap: 8px; }
+.chip-add input{ flex: 1; }
+
+.add-btn, .btn-secondary{
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  color: var(--graphite);
+  font-size: .82rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.add-btn:hover, .btn-secondary:hover{ box-shadow: var(--shadow); }
+
+.actions{
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 0;
+  background: linear-gradient(to top, var(--ivory) 70%, transparent);
+}
+.btn-primary{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  background: var(--graphite);
+  color: var(--ivory);
+  border: none;
+  font-size: .9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-primary:hover{ opacity: .9; }
+.file-label{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  font-size: .86rem;
+  cursor: pointer;
+}
+#file-input{ display: none; }
+
+.small-note{ font-size: .78rem; color: var(--slate); margin: -6px 0 20px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="admin-header">
+    <h1>Site Content Manager</h1>
+    <p>ویرایش محتوای سایت بدون نیاز به کدنویسی. فرم‌های زیر رو پر کن و در پایین «دانلود content.json» رو بزن، بعد فایل دانلودشده رو جای فایل قبلی (کنار index.html) بذار.</p>
+  </div>
+
+  <div class="status-bar" id="status-bar">در حال بارگذاری محتوای فعلی…</div>
+
+  <!-- Profile -->
+  <div class="card">
+    <h2>پروفایل</h2>
+    <p class="hint">اطلاعات اصلی که در هدر و باکس اول نمایش داده می‌شود.</p>
+    <div class="field"><label>نام و نام خانوادگی</label><input id="p-name" type="text"></div>
+    <div class="field"><label>عنوان کوتاه بالای اسم (Eyebrow)</label><input id="p-eyebrow" type="text"></div>
+    <div class="field"><label>معرفی کوتاه (Tagline)</label><textarea id="p-tagline" rows="3"></textarea></div>
+    <div class="field"><label>لینک LinkedIn</label><input id="p-linkedin" type="text"></div>
+    <div class="field"><label>ایمیل</label><input id="p-email" type="text"></div>
+    <div class="field"><label>لینک دانلود رزومه (اختیاری)</label><input id="p-cv" type="text"></div>
+  </div>
+
+  <!-- Skills -->
+  <div class="card">
+    <h2>مهارت‌ها و ابزارها</h2>
+    <p class="hint">هر مهارت را تایپ کن و اینتر بزن یا روی «افزودن» کلیک کن.</p>
+    <div class="chip-row" id="skills-chips"></div>
+    <div class="chip-add">
+      <input id="skill-input" type="text" placeholder="مثلاً PyTorch">
+      <button type="button" class="add-btn" id="skill-add-btn">افزودن</button>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="card">
+    <h2>پروژه‌های در حال انجام</h2>
+    <p class="hint">هر پروژه یک عنوان، وضعیت و توضیح کوتاه دارد.</p>
+    <div id="projects-repeat"></div>
+    <button type="button" class="add-btn" id="project-add-btn">+ افزودن پروژه</button>
+  </div>
+
+  <!-- Research -->
+  <div class="card">
+    <h2>پژوهش‌ها / مقالات</h2>
+    <p class="hint">اگر عنوان یا چکیده فارسی است، تیک «متن فارسی» را بزن تا با فونت و راست‌چین درست نمایش داده شود.</p>
+    <div id="research-repeat"></div>
+    <button type="button" class="add-btn" id="research-add-btn">+ افزودن پژوهش</button>
+  </div>
+
+  <!-- Timeline -->
+  <div class="card">
+    <h2>سوابق تحصیلی و شغلی</h2>
+    <p class="hint">هر مورد شامل بازه زمانی، عنوان، و مؤسسه/شرکت است.</p>
+    <div id="timeline-repeat"></div>
+    <button type="button" class="add-btn" id="timeline-add-btn">+ افزودن مورد</button>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" id="download-btn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+      دانلود content.json
+    </button>
+    <label class="file-label" for="file-input">
+      بارگذاری فایل content.json موجود
+    </label>
+    <input type="file" id="file-input" accept="application/json">
+  </div>
+
+</div>
+
+<script>
+let state = null;
+
+const DEFAULT_CONTENT = {
+  profile: { name: "", eyebrow: "", tagline: "", cvUrl: "", linkedin: "", email: "" },
+  skills: [],
+  projects: [],
+  research: [],
+  timeline: []
+};
+
+function escapeAttr(str){ return String(str ?? '').replace(/"/g, '&quot;'); }
+
+async function init(){
+  const bar = document.getElementById('status-bar');
+  try{
+    const res = await fetch('content.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error('not found');
+    state = await res.json();
+    bar.textContent = 'محتوای فعلی از content.json بارگذاری شد. تغییرات رو اعمال کن و در پایان دانلود بگیر.';
+    bar.className = 'status-bar ok';
+  }catch(e){
+    state = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+    bar.textContent = 'فایل content.json پیدا نشد (طبیعیه اگه این صفحه رو مستقیم باز کرده باشی). یا فرم رو از صفر پر کن، یا با دکمه «بارگذاری فایل content.json موجود» فایلت رو انتخاب کن.';
+    bar.className = 'status-bar warn';
+  }
+  render();
+}
+
+function render(){
+  document.getElementById('p-name').value = state.profile.name || '';
+  document.getElementById('p-eyebrow').value = state.profile.eyebrow || '';
+  document.getElementById('p-tagline').value = state.profile.tagline || '';
+  document.getElementById('p-linkedin').value = state.profile.linkedin || '';
+  document.getElementById('p-email').value = state.profile.email || '';
+  document.getElementById('p-cv').value = state.profile.cvUrl || '';
+
+  renderSkills();
+  renderProjects();
+  renderResearch();
+  renderTimeline();
+  bindProfileInputs();
+}
+
+function bindProfileInputs(){
+  const map = { 'p-name':'name', 'p-eyebrow':'eyebrow', 'p-tagline':'tagline', 'p-linkedin':'linkedin', 'p-email':'email', 'p-cv':'cvUrl' };
+  Object.entries(map).forEach(([id, key]) => {
+    document.getElementById(id).oninput = (e) => { state.profile[key] = e.target.value; };
+  });
+}
+
+function renderSkills(){
+  const row = document.getElementById('skills-chips');
+  row.innerHTML = '';
+  state.skills.forEach((s, i) => {
+    const chip = document.createElement('span');
+    chip.className = 'chip';
+    chip.innerHTML = `${escapeAttr(s)} <button type="button" data-i="${i}">✕</button>`;
+    chip.querySelector('button').onclick = () => { state.skills.splice(i,1); renderSkills(); };
+    row.appendChild(chip);
+  });
+}
+
+function addSkill(){
+  const input = document.getElementById('skill-input');
+  const val = input.value.trim();
+  if(!val) return;
+  state.skills.push(val);
+  input.value = '';
+  renderSkills();
+}
+document.getElementById('skill-add-btn').onclick = addSkill;
+document.getElementById('skill-input').addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){ e.preventDefault(); addSkill(); }
+});
+
+function renderProjects(){
+  const wrap = document.getElementById('projects-repeat');
+  wrap.innerHTML = '';
+  state.projects.forEach((proj, i) => {
+    const div = document.createElement('div');
+    div.className = 'repeat-item';
+    div.innerHTML = `
+      <button type="button" class="remove-btn" title="حذف">✕</button>
+      <div class="field"><label>عنوان پروژه</label><input type="text" value="${escapeAttr(proj.title)}" data-k="title"></div>
+      <div class="field"><label>وضعیت</label><input type="text" value="${escapeAttr(proj.status)}" data-k="status" placeholder="مثلاً In progress"></div>
+      <div class="field"><label>توضیح کوتاه</label><textarea rows="2" data-k="description">${proj.description || ''}</textarea></div>
+    `;
+    div.querySelector('.remove-btn').onclick = () => { state.projects.splice(i,1); renderProjects(); };
+    div.querySelectorAll('[data-k]').forEach(el => {
+      el.oninput = (e) => { proj[e.target.dataset.k] = e.target.value; };
+    });
+    wrap.appendChild(div);
+  });
+}
+document.getElementById('project-add-btn').onclick = () => {
+  state.projects.push({ title: '', status: 'In progress', description: '' });
+  renderProjects();
+};
+
+function renderResearch(){
+  const wrap = document.getElementById('research-repeat');
+  wrap.innerHTML = '';
+  state.research.forEach((r, i) => {
+    const isFa = r.lang === 'fa';
+    const div = document.createElement('div');
+    div.className = 'repeat-item';
+    div.innerHTML = `
+      <button type="button" class="remove-btn" title="حذف">✕</button>
+      <div class="field">
+        <label><input type="checkbox" data-k="lang" ${isFa ? 'checked' : ''}> متن فارسی است</label>
+      </div>
+      <div class="field"><label>عنوان مقاله</label><input type="text" class="${isFa ? 'fa-input' : ''}" value="${escapeAttr(r.title)}" data-k="title"></div>
+      <div class="field"><label>وضعیت</label><input type="text" value="${escapeAttr(r.status)}" data-k="status" placeholder="مثلاً Article / Published"></div>
+      <div class="field"><label>چکیده کوتاه</label><textarea rows="3" class="${isFa ? 'fa-input' : ''}" data-k="description">${r.description || ''}</textarea></div>
+    `;
+    div.querySelector('.remove-btn').onclick = () => { state.research.splice(i,1); renderResearch(); };
+    div.querySelectorAll('[data-k]').forEach(el => {
+      if(el.dataset.k === 'lang'){
+        el.onchange = (e) => { r.lang = e.target.checked ? 'fa' : 'en'; renderResearch(); };
+      } else {
+        el.oninput = (e) => { r[e.target.dataset.k] = e.target.value; };
+      }
+    });
+    wrap.appendChild(div);
+  });
+}
+document.getElementById('research-add-btn').onclick = () => {
+  state.research.push({ title: '', status: 'Article', lang: 'en', description: '' });
+  renderResearch();
+};
+
+function renderTimeline(){
+  const wrap = document.getElementById('timeline-repeat');
+  wrap.innerHTML = '';
+  state.timeline.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'repeat-item';
+    div.innerHTML = `
+      <button type="button" class="remove-btn" title="حذف">✕</button>
+      <div class="field"><label>بازه زمانی</label><input type="text" value="${escapeAttr(t.period)}" data-k="period" placeholder="مثلاً 2022 — 2024"></div>
+      <div class="field"><label>عنوان (مدرک یا سمت)</label><input type="text" value="${escapeAttr(t.title)}" data-k="title"></div>
+      <div class="field"><label>مؤسسه / شرکت و توضیح کوتاه</label><input type="text" value="${escapeAttr(t.org)}" data-k="org"></div>
+    `;
+    div.querySelector('.remove-btn').onclick = () => { state.timeline.splice(i,1); renderTimeline(); };
+    div.querySelectorAll('[data-k]').forEach(el => {
+      el.oninput = (e) => { t[e.target.dataset.k] = e.target.value; };
+    });
+    wrap.appendChild(div);
+  });
+}
+document.getElementById('timeline-add-btn').onclick = () => {
+  state.timeline.push({ period: '', title: '', org: '' });
+  renderTimeline();
+};
+
+document.getElementById('download-btn').onclick = () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'content.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+document.getElementById('file-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      state = JSON.parse(reader.result);
+      state.profile = state.profile || {};
+      state.skills = state.skills || [];
+      state.projects = state.projects || [];
+      state.research = state.research || [];
+      state.timeline = state.timeline || [];
+      render();
+      const bar = document.getElementById('status-bar');
+      bar.textContent = 'فایل با موفقیت بارگذاری شد.';
+      bar.className = 'status-bar ok';
+    }catch(err){
+      alert('این فایل یک JSON معتبر نیست.');
+    }
+  };
+  reader.readAsText(file);
+});
+
+init();
+</script>
+</body>
+</html>

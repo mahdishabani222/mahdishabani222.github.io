@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function(){
+    try{
+      var saved = localStorage.getItem('site-theme');
+      if(saved === 'dark' || saved === 'light'){
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    }catch(e){}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research & Publications — Mahdi Shabani</title>
+<meta name="description" content="Research and publications by Mahdi Shabani in machine learning, spatial data science, and computer vision.">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Research & Publications — Mahdi Shabani">
+<meta property="og:description" content="Research and publications by Mahdi Shabani in machine learning, spatial data science, and computer vision.">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta property="og:url" content="research.html">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Research & Publications — Mahdi Shabani">
+<meta name="twitter:description" content="Research and publications by Mahdi Shabani in machine learning, spatial data science, and computer vision.">
+<meta name="twitter:image" content="assets/og-image.jpg">
+
+<style>
+/* =========================================================
+   Mahdi Shabani — Personal Site
+   Design tokens: light luxury, silver/platinum accent
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Vazirmatn:wght@400;500;600&display=swap');
+
+:root{
+  /* color */
+  --ivory:        #FAF9F6;
+  --paper:        #FFFFFF;
+  --graphite:     #1E1F22;
+  --slate:        #6E7075;
+  --hairline:     #E7E6E1;
+  --silver-a:     #C7CBD1;
+  --silver-b:     #EDEEF0;
+  --silver-c:     #B7BBC1;
+  --shadow:       0 1px 2px rgba(30,31,34,.04), 0 12px 32px -16px rgba(30,31,34,.14);
+  --shadow-hover: 0 1px 2px rgba(30,31,34,.05), 0 20px 44px -18px rgba(30,31,34,.20);
+
+  /* type */
+  --font-display: 'Cormorant Garamond', 'Vazirmatn', serif;
+  --font-body:    'Inter', 'Vazirmatn', sans-serif;
+  --font-fa:      'B Nazanin', 'Vazirmatn', Tahoma, sans-serif;
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+}
+
+[data-theme="dark"]{
+  --ivory:    #17181B;
+  --paper:    #1D1E22;
+  --graphite: #F3F2EE;
+  --slate:    #9B9DA3;
+  --hairline: #2C2D31;
+  --silver-a: #4A4D53;
+  --silver-b: #6C6F76;
+  --silver-c: #83868D;
+  --shadow:       0 1px 2px rgba(0,0,0,.3), 0 12px 32px -16px rgba(0,0,0,.5);
+  --shadow-hover: 0 1px 2px rgba(0,0,0,.35), 0 20px 44px -18px rgba(0,0,0,.6);
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  background: var(--ivory);
+  color: var(--graphite);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background .4s ease, color .4s ease;
+}
+
+.fa{ font-family: var(--font-fa); direction: rtl; }
+
+.wrap{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ---------- header ---------- */
+.site-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 0 8px;
+}
+
+.mark{
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: .04em;
+  color: var(--graphite);
+  text-decoration: none;
+}
+
+.theme-toggle{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--graphite);
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+.theme-toggle:hover{ box-shadow: var(--shadow); transform: translateY(-1px); }
+.theme-toggle svg{ width: 18px; height: 18px; }
+.theme-toggle .moon{ display: none; }
+[data-theme="dark"] .theme-toggle .sun{ display: none; }
+[data-theme="dark"] .theme-toggle .moon{ display: block; }
+
+/* ---------- hero ---------- */
+.hero{
+  padding: 64px 0 40px;
+  text-align: center;
+}
+
+.eyebrow{
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin: 0 0 14px;
+}
+
+.hero h1{
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  margin: 0 0 14px;
+  letter-spacing: .01em;
+}
+
+.hero p.tagline{
+  color: var(--slate);
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+.tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.tag{
+  font-size: .78rem;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  color: var(--slate);
+  background: var(--paper);
+  letter-spacing: .02em;
+}
+
+.cv-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: var(--graphite);
+  color: var(--ivory);
+  text-decoration: none;
+  font-size: .88rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.cv-btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.cv-btn svg{ width: 15px; height: 15px; }
+
+/* ---------- box grid ---------- */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  padding: 20px 0 70px;
+}
+
+@media (max-width: 860px){
+  .grid{ grid-template-columns: 1fr; }
+}
+
+.box{
+  position: relative;
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow);
+  padding: 34px 28px;
+  overflow: hidden;
+  transition: box-shadow .4s ease, transform .4s ease, border-color .4s ease;
+}
+
+/* metallic shimmer signature — a soft brushed-silver sweep on hover */
+.box::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, transparent 30%, var(--silver-a) 45%, var(--silver-b) 50%, var(--silver-c) 55%, transparent 70%);
+  background-size: 260% 260%;
+  background-position: -40% -40%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .5s ease, background-position 1.1s ease;
+  pointer-events: none;
+}
+
+.box:hover{
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+.box:hover::before{
+  opacity: 1;
+  background-position: 140% 140%;
+}
+
+.box h2{
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin: 0 0 22px;
+  letter-spacing: .01em;
+}
+
+/* profile box */
+.profile-box{ display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.avatar-ring{
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, var(--silver-a), var(--silver-b), var(--silver-c));
+  margin-bottom: 20px;
+}
+.avatar-ring img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 3px solid var(--paper);
+}
+
+.profile-box .name{
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+}
+.profile-box .role{
+  color: var(--slate);
+  font-size: .85rem;
+  margin: 0 0 22px;
+}
+
+.icon-row{
+  display: flex;
+  gap: 14px;
+}
+
+.icon-link{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--graphite);
+  text-decoration: none;
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.icon-link:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  background: linear-gradient(135deg, var(--silver-b), var(--paper));
+}
+.icon-link svg{ width: 19px; height: 19px; }
+
+/* list boxes (projects / research) */
+.item-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-list li{ border-top: 1px solid var(--hairline); }
+.item-list li:first-child{ border-top: none; }
+
+.item-list a{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 2px;
+  color: var(--graphite);
+  text-decoration: none;
+  font-size: .96rem;
+  line-height: 1.45;
+  transition: color .25s ease, gap .25s ease;
+}
+.item-list a:hover{ color: var(--slate); gap: 18px; }
+.item-list a .arrow{ flex: none; width: 15px; height: 15px; opacity: .55; transition: transform .3s ease; }
+.item-list a:hover .arrow{ transform: translateX(-3px); opacity: 1; }
+.item-list a:hover .arrow.rtl{ transform: translateX(3px); }
+
+.item-list .fa-item{ font-family: var(--font-fa); direction: rtl; text-align: right; font-size: 1.02rem; }
+
+.more-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: .78rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--slate);
+  text-decoration: none;
+}
+.more-link svg{ width: 13px; height: 13px; }
+
+/* ---------- footer ---------- */
+.site-footer{
+  text-align: center;
+  padding: 30px 0 50px;
+  color: var(--slate);
+  font-size: .82rem;
+  border-top: 1px solid var(--hairline);
+}
+
+/* ---------- inner pages (projects/research) ---------- */
+.page-header{ padding: 60px 0 20px; }
+.back-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--slate);
+  text-decoration: none;
+  font-size: .84rem;
+  margin-bottom: 26px;
+}
+.back-link svg{ width: 13px; height: 13px; }
+.back-link:hover{ color: var(--graphite); }
+
+.page-header h1{
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  margin: 0 0 10px;
+}
+.page-header p{ color: var(--slate); margin: 0 0 40px; }
+
+.entry-list{ display: flex; flex-direction: column; gap: 18px; padding-bottom: 80px; }
+
+.entry{
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 26px 28px;
+  box-shadow: var(--shadow);
+}
+.entry h3{
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+.entry h3.fa{ text-align: right; }
+.entry .status{
+  display: inline-block;
+  font-size: .7rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--slate);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 3px 12px;
+  margin-bottom: 12px;
+}
+.entry p.desc{ color: var(--slate); margin: 0; line-height: 1.65; font-size: .93rem; }
+.entry p.desc.fa{ text-align: right; }
+
+
+/* ---------- scroll reveal ---------- */
+.reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- extra sections (skills / timeline / contact) ---------- */
+.section{
+  padding: 10px 0 60px;
+}
+.section-head{
+  text-align: center;
+  margin-bottom: 30px;
+}
+.section-head h2{
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin: 0 0 8px;
+}
+.section-head p{
+  color: var(--slate);
+  font-size: .92rem;
+  margin: 0;
+}
+
+/* skills */
+.skills-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.skill-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .85rem;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  color: var(--graphite);
+  box-shadow: var(--shadow);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.skill-chip:hover{ transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.skill-chip .dot{
+  width: 6px; height: 6px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--silver-a), var(--silver-c));
+  flex: none;
+}
+
+/* timeline */
+.timeline{
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  padding-left: 26px;
+  border-left: 1px solid var(--hairline);
+}
+.timeline-item{
+  position: relative;
+  padding-bottom: 34px;
+}
+.timeline-item:last-child{ padding-bottom: 0; }
+.timeline-item::before{
+  content: "";
+  position: absolute;
+  left: -31px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--silver-c);
+}
+.timeline-item .t-period{
+  font-size: .74rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin: 0 0 4px;
+}
+.timeline-item h3{
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+.timeline-item p{
+  color: var(--slate);
+  font-size: .9rem;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* contact form */
+.contact-box{
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 34px 32px;
+}
+.form-row{ margin-bottom: 16px; }
+.form-row label{
+  display: block;
+  font-size: .78rem;
+  letter-spacing: .03em;
+  color: var(--slate);
+  margin-bottom: 6px;
+}
+.form-row input,
+.form-row textarea{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--hairline);
+  background: var(--ivory);
+  color: var(--graphite);
+  font-family: var(--font-body);
+  font-size: .92rem;
+  resize: vertical;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.form-row input:focus,
+.form-row textarea:focus{
+  outline: none;
+  border-color: var(--silver-c);
+  box-shadow: 0 0 0 3px rgba(183,187,193,.25);
+}
+.form-submit{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: var(--graphite);
+  color: var(--ivory);
+  border: none;
+  font-size: .88rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.form-submit:hover{ transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.form-note{
+  font-size: .76rem;
+  color: var(--slate);
+  margin-top: 12px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; animation: none !important; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="site-header">
+    <a href="index.html" class="mark">M. Shabani</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
+    </button>
+  </header>
+
+  <div class="page-header">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+      Back home
+    </a>
+    <h1>Research</h1>
+    <p>Published and ongoing research work.</p>
+  </div>
+
+  <main class="entry-list" id="entry-list"></main>
+
+  <footer class="site-footer">
+    © <span id="year"></span> <span id="footer-name">Mahdi Shabani</span>. All rights reserved.
+  </footer>
+
+</div>
+
+<script>
+const FALLBACK_CONTENT = {
+  "profile": { "name": "Mahdi Shabani" },
+  "research": [
+    {"title":"تشخیص نوع گوهرسنگ با استفاده از شبکه عصبی کانوولوشنی","status":"Article","lang":"fa","description":"چکیده مقاله را اینجا قرار دهید."}
+  ]
+};
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str == null ? '' : String(str);
+  return d.innerHTML;
+}
+
+async function loadContent(){
+  try{
+    const res = await fetch('content.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error('bad response');
+    return await res.json();
+  }catch(e){
+    console.warn('Could not load content.json, using fallback content.', e);
+    return FALLBACK_CONTENT;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const data = await loadContent();
+  document.getElementById('footer-name').textContent = (data.profile && data.profile.name) || '';
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const list = document.getElementById('entry-list');
+  (data.research || []).forEach((r, i) => {
+    const isFa = r.lang === 'fa';
+    const art = document.createElement('article');
+    art.className = 'entry reveal';
+    art.id = 'research-' + (i + 1);
+    art.style.transitionDelay = (i * 0.08).toFixed(2) + 's';
+    art.innerHTML = `
+      <span class="status">${escapeHtml(r.status || '')}</span>
+      <h3${isFa ? ' class="fa"' : ''}>${escapeHtml(r.title)}</h3>
+      <p class="desc${isFa ? ' fa' : ''}">${escapeHtml(r.description || '')}</p>`;
+    list.appendChild(art);
+  });
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
+});
+</script>
+<script>
+// Simple light/dark theme toggle (in-memory, resets on reload by design)
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('site-theme', next); }catch(e){}
+  });
+});
+
+</script>
+</body>
+</html>

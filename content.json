@@ -1,130 +1,202 @@
 {
-  "profile": {
-    "name": "Mahdi Shabani",
-    "eyebrow": "Machine Learning · Spatial Data Science · Mineral Exploration",
-    "tagline": "Building explainable and uncertainty-aware AI systems for spatial decision-making, with applications in mineral exploration and intelligent geoscience.",
-    "shortBio": "Machine Learning researcher focused on spatial data science, explainable AI, uncertainty quantification, and computer vision for mineral exploration.",
-    "cvUrl": "",
-    "linkedin": "https://www.linkedin.com/in/mahdi-shabani1/",
-    "email": "mshabani544@gmail.com"
-  },
+"profile": {
+"name": "Mahdi Shabani",
+"eyebrow": "Machine Learning · Spatial Data Science · Mineral Exploration",
+"tagline": "Building explainable and uncertainty-aware AI systems for spatial decision-making, with applications in mineral exploration and intelligent geoscience.",
+"shortBio": "Machine Learning researcher focused on spatial data science, explainable AI, uncertainty quantification, and computer vision for mineral exploration.",
+"cvUrl": "",
+"linkedin": "https://www.linkedin.com/in/mahdi-shabani1/",
+"email": "[mshabani544@gmail.com](mailto:mshabani544@gmail.com)"
+},
 
-  "brand": {
-    "positioning": "AI-driven spatial intelligence for mineral exploration and geoscience.",
-    "coreFocus": [
-      "Artificial Intelligence",
-      "Machine Learning",
-      "Spatial Data Science",
-      "Mineral Exploration",
-      "Explainable AI",
-      "Uncertainty Quantification"
-    ],
-    "valueProposition": "Turning complex spatial and exploration data into explainable, reliable, and actionable intelligence.",
-    "audience": [
-      "Mining Companies",
-      "Mineral Exploration Teams",
-      "Geoscientists",
-      "Research Institutions",
-      "AI & Data Science Professionals"
-    ]
-  },
+"brand": {
+"positioning": "AI-driven spatial intelligence for mineral exploration and geoscience.",
+"coreFocus": [
+"Artificial Intelligence",
+"Machine Learning",
+"Spatial Data Science",
+"Mineral Exploration",
+"Explainable AI",
+"Uncertainty Quantification"
+],
+"valueProposition": "Turning complex spatial and exploration data into explainable, reliable, and actionable intelligence.",
+"audience": [
+"Mining Companies",
+"Mineral Exploration Teams",
+"Geoscientists",
+"Research Institutions",
+"AI & Data Science Professionals"
+]
+},
 
-  "skills": {
-    "machineLearning": [
-      "Python", "Machine Learning", "Deep Learning", "Scikit-learn",
-      "PyTorch", "Feature Engineering", "Model Evaluation", "Hyperparameter Optimization"
-    ],
-    "spatialDataScience": [
-      "Spatial Data Analysis", "GIS Analysis", "Geospatial Machine Learning",
-      "Spatial Modeling", "Mineral Prospectivity Mapping"
-    ],
-    "aiResearch": [
-      "Explainable AI (XAI)", "Uncertainty Quantification",
-      "Uncertainty-Aware Machine Learning", "Interpretable Machine Learning",
-      "Decision Support Systems"
-    ],
-    "computerVision": [
-      "Computer Vision", "Image Classification", "Transfer Learning",
-      "Active Learning", "Drill Core Image Analysis"
-    ],
-    "dataScience": [
-      "Exploratory Data Analysis", "Statistical Analysis",
-      "Data Visualization", "Geochemical Data Analysis"
-    ]
-  },
+"skills": {
+"machineLearning": [
+"Python",
+"Machine Learning",
+"Deep Learning",
+"Scikit-learn",
+"PyTorch",
+"Feature Engineering",
+"Model Evaluation",
+"Hyperparameter Optimization"
+],
+"spatialDataScience": [
+"Spatial Data Analysis",
+"GIS Analysis",
+"Geospatial Machine Learning",
+"Spatial Modeling",
+"Mineral Prospectivity Mapping"
+],
+"aiResearch": [
+"Explainable AI (XAI)",
+"Uncertainty Quantification",
+"Uncertainty-Aware Machine Learning",
+"Interpretable Machine Learning",
+"Decision Support Systems"
+],
+"computerVision": [
+"Computer Vision",
+"Image Classification",
+"Transfer Learning",
+"Active Learning",
+"Drill Core Image Analysis"
+],
+"dataScience": [
+"Exploratory Data Analysis",
+"Statistical Analysis",
+"Data Visualization",
+"Geochemical Data Analysis"
+]
+},
 
-  "projects": [
-    {
-      "title": "AIM Core Log",
-      "subtitle": "AI-Powered Drill Core Classification",
-      "status": "In progress",
-      "domain": "Mineral Exploration · Computer Vision",
-      "description": "An AI-powered computer vision system designed to automate lithology classification from drill core photographs for mineral exploration. The system uses a PyTorch-based training pipeline with transfer learning and an active-learning feedback loop that incorporates geologist corrections to continuously improve model performance.",
-      "technology": ["Python", "PyTorch", "Computer Vision", "Transfer Learning", "Active Learning", "Deep Learning"],
-      "impact": "Reducing manual core-logging workload while creating a scalable and continuously improving geological classification workflow.",
-      "dataset": "Custom proprietary dataset"
-    },
-    {
-      "title": "KanYab",
-      "subtitle": "AI-Powered Geochemical Exploration Analytics",
-      "status": "In progress",
-      "domain": "Mineral Exploration · Geochemical Data Science",
-      "description": "An AI-powered analytics system for mineral exploration that identifies anomalous geochemical samples, discovers meaningful element relationships, and highlights pathfinder signatures associated with mineralization.",
-      "technology": ["Python", "Machine Learning", "Geochemical Data Analysis", "Anomaly Detection", "Statistical Analysis", "Data Visualization"],
-      "impact": "Helping exploration teams transform large geochemical datasets into interpretable evidence for prioritizing exploration targets.",
-      "focus": ["Geochemical Anomaly Detection", "Pathfinder Element Analysis", "Exploration Target Prioritization"]
-    }
+"projects": [
+{
+"title": "AIM Core Log",
+"subtitle": "AI-Powered Drill Core Classification",
+"status": "In progress",
+"domain": "Mineral Exploration · Computer Vision",
+"description": "An AI-powered computer vision system designed to automate lithology classification from drill core photographs for mineral exploration. The system uses a PyTorch-based training pipeline with transfer learning and an active-learning feedback loop that incorporates geologist corrections to continuously improve model performance.",
+"technology": [
+"Python",
+"PyTorch",
+"Computer Vision",
+"Transfer Learning",
+"Active Learning",
+"Deep Learning"
+],
+"impact": "Reducing manual core-logging workload while creating a scalable and continuously improving geological classification workflow.",
+"dataset": "Custom proprietary dataset"
+},
+
+```
+{
+  "title": "KanYab",
+  "subtitle": "AI-Powered Geochemical Exploration Analytics",
+  "status": "In progress",
+  "domain": "Mineral Exploration · Geochemical Data Science",
+  "description": "An AI-powered analytics system for mineral exploration that identifies anomalous geochemical samples, discovers meaningful element relationships, and highlights pathfinder signatures associated with mineralization.",
+  "technology": [
+    "Python",
+    "Machine Learning",
+    "Geochemical Data Analysis",
+    "Anomaly Detection",
+    "Statistical Analysis",
+    "Data Visualization"
   ],
+  "impact": "Helping exploration teams transform large geochemical datasets into interpretable evidence for prioritizing exploration targets.",
+  "focus": [
+    "Geochemical Anomaly Detection",
+    "Pathfinder Element Analysis",
+    "Exploration Target Prioritization"
+  ]
+}
+```
 
-  "research": [
-    {
-      "title": "Development of an Explainable and Uncertainty-Aware Machine Learning Framework for Spatial Decision-Making",
-      "status": "Research",
-      "domain": "Explainable AI · Uncertainty Quantification · Spatial Decision-Making",
-      "description": "A research framework that integrates explainable artificial intelligence and uncertainty quantification into spatial machine learning workflows. The goal is to improve transparency, reliability, and decision confidence when machine learning models are applied to complex spatial problems.",
-      "researchAreas": ["Explainable AI", "Uncertainty Quantification", "Spatial Machine Learning", "Spatial Decision-Making", "Decision Support Systems"]
-    }
-  ],
+],
 
-  "researchInterests": [
-    "Explainable Artificial Intelligence",
-    "Uncertainty-Aware Machine Learning",
-    "Spatial Machine Learning",
-    "Geospatial Data Science",
-    "Mineral Prospectivity Mapping",
-    "Intelligent Mineral Exploration",
-    "Computer Vision for Geoscience",
-    "AI-Assisted Geological Interpretation",
-    "Spatial Decision Support Systems"
-  ],
+"research": [
+{
+"title": "Development of an Explainable and Uncertainty-Aware Machine Learning Framework for Spatial Decision-Making",
+"status": "Research",
+"domain": "Explainable AI · Uncertainty Quantification · Spatial Decision-Making",
+"description": "A research framework that integrates explainable artificial intelligence and uncertainty quantification into spatial machine learning workflows. The goal is to improve transparency, reliability, and decision confidence when machine learning models are applied to complex spatial problems.",
+"researchAreas": [
+"Explainable AI",
+"Uncertainty Quantification",
+"Spatial Machine Learning",
+"Spatial Decision-Making",
+"Decision Support Systems"
+]
+}
+],
 
-  "education": [
-    { "period": "2020 — 2024", "degree": "B.Sc. in Chemistry", "field": "Chemistry" },
-    { "period": "2024 — 2026", "degree": "M.Sc. in Industrial Engineering", "field": "Modeling and Data Analysis" }
-  ],
+"researchInterests": [
+"Explainable Artificial Intelligence",
+"Uncertainty-Aware Machine Learning",
+"Spatial Machine Learning",
+"Geospatial Data Science",
+"Mineral Prospectivity Mapping",
+"Intelligent Mineral Exploration",
+"Computer Vision for Geoscience",
+"AI-Assisted Geological Interpretation",
+"Spatial Decision Support Systems"
+],
 
-  "careerDirection": {
-    "current": "Machine Learning · Spatial Data Science · Mineral Exploration",
-    "next": "AI for Mining and Geoscience",
-    "longTerm": "Building intelligent AI systems for mineral exploration, spatial decision-making, and digital mining."
-  },
+"education": [
+{
+"period": "2020 — 2024",
+"degree": "B.Sc. in Chemistry",
+"field": "Chemistry"
+},
+{
+"period": "2024 — 2026",
+"degree": "M.Sc. in Industrial Engineering",
+"field": "Modeling and Data Analysis"
+}
+],
 
-  "professionalIdentity": {
-    "role": "Machine Learning Researcher",
-    "specialization": "Spatial Data Science for Mineral Exploration",
-    "domain": "Artificial Intelligence in Mining and Geoscience",
-    "approach": ["Data-Driven", "Explainable", "Uncertainty-Aware", "Spatially Informed", "Decision-Oriented"]
-  },
+"careerDirection": {
+"current": "Machine Learning · Spatial Data Science · Mineral Exploration",
+"next": "AI for Mining and Geoscience",
+"longTerm": "Building intelligent AI systems for mineral exploration, spatial decision-making, and digital mining."
+},
 
-  "timeline": [
-    { "period": "2020 — 2024", "title": "B.Sc. in Chemistry", "org": "University" },
-    { "period": "2024 — 2026", "title": "M.Sc. in Industrial Engineering", "org": "Khwarizmi University", "focus": "Modeling and Data Analysis" },
-    { "period": "2025 — Present", "title": "Research & Projects", "org": "Independent Research", "focus": "AI · Spatial Data Science · Mineral Exploration" }
-  ],
+"professionalIdentity": {
+"role": "Machine Learning Researcher",
+"specialization": "Spatial Data Science for Mineral Exploration",
+"domain": "Artificial Intelligence in Mining and Geoscience",
+"approach": [
+"Data-Driven",
+"Explainable",
+"Uncertainty-Aware",
+"Spatially Informed",
+"Decision-Oriented"
+]
+},
 
-  "contact": {
-    "email": "mshabani544@gmail.com",
-    "linkedin": "https://www.linkedin.com/in/mahdi-shabani1/",
-    "cv": ""
-  }
+"timeline": [
+{
+"period": "2020 — 2024",
+"title": "B.Sc. in Chemistry",
+"org": "University"
+},
+{
+"period": "2024 — 2026",
+"title": "M.Sc. in Industrial Engineering",
+"org": "Khwarizmi University",
+"focus": "Modeling and Data Analysis"
+},
+{
+"period": "2025 — Present",
+"title": "Research & Projects",
+"org": "Independent Research",
+"focus": "AI · Spatial Data Science · Mineral Exploration"
+}
+],
+
+"contact": {
+"email": "[mshabani544@gmail.com](mailto:mshabani544@gmail.com)",
+"linkedin": "https://www.linkedin.com/in/mahdi-shabani1/",
+"cv": ""
+}
 }

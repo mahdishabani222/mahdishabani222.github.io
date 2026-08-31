@@ -18,39 +18,32 @@
   ],
   "projects": [
     {
-      "title": "Core Logging",
+      "title": "AIM Core Log — AI-Powered Drill Core Classification",
       "status": "In progress",
-      "description": "Buliding an AI tool to automate recognition stones"
+      "description": "An AI-powered computer vision tool that automates lithology classification from drill core photographs for mineral exploration. Built on a PyTorch training pipeline with transfer learning, an active-learning feedback loop for continuous model improvement from geologist corrections, and a web-based review interface designed around industry-standard core logging conventions. Currently training on a custom proprietary dataset."
     },
     {
-      "title": "MPM Using Machine Learning Algorithms",
+      "title": "KanYab — AI-Powered Geochemical Exploration Analytics",
       "status": "In progress",
-      "description": "Details coming soon — replace this with a short summary of the project's goals, methods, and current status."
+      "description": "KanYab helps mineral exploration teams find what matters in their geochemical data — automatically flagging anomalous samples and identifying the pathfinder elements that signal ore-grade mineralization, so geologists can prioritize drill targets with statistical confidence instead of manual spreadsheet review."
     }
   ],
   "research": [
     {
-      "title": "تشخیص نوع گوهرسنگ با استفاده از شبکه عصبی کانوولوشنی",
-      "status": "Article",
-      "lang": "fa",
-      "description": "این بخش را با چکیده یا توضیح کوتاهی از مقاله جایگزین کنید — روش پژوهش، یافته‌های اصلی و محل انتشار."
+      "title": "Development of an Explainable and Uncertainty-Aware Machine Learning Framework for Spatial Decision-Making",
+      "status": "Report",
+      "description": "This report presents a novel framework that integrates explainable AI and uncertainty quantification to enhance spatial decision-making processes. By improving transparency and reliability, the framework aims to support stakeholders in making informed decisions based on complex spatial data."
     }
   ],
   "timeline": [
     {
-      "period": "2018 — 2022",
+      "period": "2020 — 2024",
       "title": "Bachelor ",
       "org": "Chemistry "
     },
     {
-      "period": "Year — Year",
-      "title": "Degree / Position Title",
-      "org": "Institution or company name. One line on focus area or key achievement."
+      "period": "2024 — 2026",
+      "title": "Master / Industrial Engineering with a focus on Modeling and Data Analysis",
     },
-    {
-      "period": "Year — Year",
-      "title": "Degree / Position Title",
-      "org": "Institution or company name. One line on focus area or key achievement."
-    }
   ]
 }

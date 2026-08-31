@@ -117,8 +117,8 @@
   },
 
   "timeline": [
-    { "period": "2020 — 2024", "title": "B.Sc. in Chemistry", "org": "University" },
-    { "period": "2024 — 2026", "title": "M.Sc. in Industrial Engineering", "org": "Khwarizmi University", "focus": "Modeling and Data Analysis" },
+    { "period": "2020 — 2024", "title": "B.Sc. in Chemistry", "org": "Shahid Beheshti University" },
+    { "period": "2024 — 2026", "title": "M.Sc. in Industrial Engineering", "org": "Sadjad University", "focus": "Modeling and Data Analysis" },
     { "period": "2025 — Present", "title": "Research & Projects", "org": "Independent Research", "focus": "AI · Spatial Data Science · Mineral Exploration" }
   ],
 

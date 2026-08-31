@@ -205,26 +205,50 @@ body{
     <div class="field"><label>نام و نام خانوادگی</label><input id="p-name" type="text"></div>
     <div class="field"><label>عنوان کوتاه بالای اسم (Eyebrow)</label><input id="p-eyebrow" type="text"></div>
     <div class="field"><label>معرفی کوتاه (Tagline)</label><textarea id="p-tagline" rows="3"></textarea></div>
+    <div class="field"><label>بیوگرافی کوتاه (بخش About)</label><textarea id="p-shortbio" rows="3"></textarea></div>
     <div class="field"><label>لینک LinkedIn</label><input id="p-linkedin" type="text"></div>
     <div class="field"><label>ایمیل</label><input id="p-email" type="text"></div>
     <div class="field"><label>لینک دانلود رزومه (اختیاری)</label><input id="p-cv" type="text"></div>
   </div>
 
+  <!-- Professional identity & career direction -->
+  <div class="card">
+    <h2>هویت حرفه‌ای و مسیر شغلی</h2>
+    <p class="hint">این‌ها به‌صورت برچسب‌های کوچک زیر بیوگرافی و یک نوار «حال / بعدی / بلندمدت» نمایش داده می‌شن.</p>
+    <div class="field"><label>ویژگی‌های رویکرد (مثلاً Data-Driven، Explainable)</label></div>
+    <div class="chip-row" id="approach-chips"></div>
+    <div class="chip-add">
+      <input id="approach-input" type="text" placeholder="مثلاً Explainable">
+      <button type="button" class="add-btn" id="approach-add-btn" style="margin-bottom:0;">افزودن</button>
+    </div>
+    <div class="field" style="margin-top:20px;"><label>مسیر شغلی — الان</label><input id="career-current" type="text"></div>
+    <div class="field"><label>مسیر شغلی — بعدی</label><input id="career-next" type="text"></div>
+    <div class="field"><label>مسیر شغلی — بلندمدت</label><input id="career-longterm" type="text"></div>
+  </div>
+
+  <!-- Research interests -->
+  <div class="card">
+    <h2>علایق پژوهشی</h2>
+    <p class="hint">لیست کوتاهی از زمینه‌هایی که بهشون علاقه‌مندی (جدا از پژوهش‌های منتشرشده).</p>
+    <div class="chip-row" id="interests-chips"></div>
+    <div class="chip-add">
+      <input id="interest-input" type="text" placeholder="مثلاً Spatial Machine Learning">
+      <button type="button" class="add-btn" id="interest-add-btn">افزودن</button>
+    </div>
+  </div>
+
   <!-- Skills -->
   <div class="card">
     <h2>مهارت‌ها و ابزارها</h2>
-    <p class="hint">هر مهارت را تایپ کن و اینتر بزن یا روی «افزودن» کلیک کن.</p>
-    <div class="chip-row" id="skills-chips"></div>
-    <div class="chip-add">
-      <input id="skill-input" type="text" placeholder="مثلاً PyTorch">
-      <button type="button" class="add-btn" id="skill-add-btn">افزودن</button>
-    </div>
+    <p class="hint">مهارت‌ها رو در دسته‌های مختلف سازمان‌دهی کن (مثلاً «یادگیری ماشین»، «بینایی کامپیوتر»). هر دسته یک عنوان و لیستی از مهارت‌ها داره.</p>
+    <div id="skills-categories-repeat"></div>
+    <button type="button" class="add-btn" id="category-add-btn">+ افزودن دسته‌بندی جدید</button>
   </div>
 
   <!-- Projects -->
   <div class="card">
     <h2>پروژه‌های در حال انجام</h2>
-    <p class="hint">هر پروژه یک عنوان، وضعیت و توضیح کوتاه دارد.</p>
+    <p class="hint">فیلدهای اختیاری (زیرعنوان، حوزه، فناوری‌ها، تأثیر، دیتاست) رو خالی بذار اگه لازم نداری.</p>
     <div id="projects-repeat"></div>
     <button type="button" class="add-btn" id="project-add-btn">+ افزودن پروژه</button>
   </div>
@@ -240,7 +264,7 @@ body{
   <!-- Timeline -->
   <div class="card">
     <h2>سوابق تحصیلی و شغلی</h2>
-    <p class="hint">هر مورد شامل بازه زمانی، عنوان، و مؤسسه/شرکت است.</p>
+    <p class="hint">هر مورد شامل بازه زمانی، عنوان، مؤسسه/شرکت، و یک توضیح تمرکز (اختیاری) است.</p>
     <div id="timeline-repeat"></div>
     <button type="button" class="add-btn" id="timeline-add-btn">+ افزودن مورد</button>
   </div>
@@ -262,8 +286,11 @@ body{
 let state = null;
 
 const DEFAULT_CONTENT = {
-  profile: { name: "", eyebrow: "", tagline: "", cvUrl: "", linkedin: "", email: "" },
-  skills: [],
+  profile: { name: "", eyebrow: "", tagline: "", shortBio: "", cvUrl: "", linkedin: "", email: "" },
+  professionalIdentity: { approach: [] },
+  careerDirection: { current: "", next: "", longTerm: "" },
+  researchInterests: [],
+  skills: {},
   projects: [],
   research: [],
   timeline: []
@@ -271,12 +298,17 @@ const DEFAULT_CONTENT = {
 
 function escapeAttr(str){ return String(str ?? '').replace(/"/g, '&quot;'); }
 
+// helpers for comma-separated tag lists (technology, researchAreas, focus)
+function tagsToInput(arr){ return Array.isArray(arr) ? arr.join(', ') : ''; }
+function inputToTags(str){ return String(str || '').split(',').map(s => s.trim()).filter(Boolean); }
+
 async function init(){
   const bar = document.getElementById('status-bar');
   try{
     const res = await fetch('content.json', { cache: 'no-store' });
     if(!res.ok) throw new Error('not found');
     state = await res.json();
+    normalizeState();
     bar.textContent = 'محتوای فعلی از content.json بارگذاری شد. تغییرات رو اعمال کن و در پایان دانلود بگیر.';
     bar.className = 'status-bar ok';
   }catch(e){
@@ -287,52 +319,171 @@ async function init(){
   render();
 }
 
+// fills in any missing sections without deleting fields this UI doesn't expose (brand, education, contact, ...)
+function normalizeState(){
+  state.profile = state.profile || {};
+  state.professionalIdentity = state.professionalIdentity || {};
+  state.professionalIdentity.approach = state.professionalIdentity.approach || [];
+  state.careerDirection = state.careerDirection || { current: "", next: "", longTerm: "" };
+  state.researchInterests = state.researchInterests || [];
+  // normalize skills: if it came as a flat array, convert to a single "General" category
+  if (Array.isArray(state.skills)) {
+    state.skills = state.skills.length ? { "General": state.skills } : {};
+  } else {
+    state.skills = state.skills || {};
+  }
+  state.projects = state.projects || [];
+  state.research = state.research || [];
+  state.timeline = state.timeline || [];
+}
+
 function render(){
   document.getElementById('p-name').value = state.profile.name || '';
   document.getElementById('p-eyebrow').value = state.profile.eyebrow || '';
   document.getElementById('p-tagline').value = state.profile.tagline || '';
+  document.getElementById('p-shortbio').value = state.profile.shortBio || '';
   document.getElementById('p-linkedin').value = state.profile.linkedin || '';
   document.getElementById('p-email').value = state.profile.email || '';
   document.getElementById('p-cv').value = state.profile.cvUrl || '';
 
-  renderSkills();
+  document.getElementById('career-current').value = state.careerDirection.current || '';
+  document.getElementById('career-next').value = state.careerDirection.next || '';
+  document.getElementById('career-longterm').value = state.careerDirection.longTerm || '';
+
+  renderApproachChips();
+  renderInterestChips();
+  renderSkillCategories();
   renderProjects();
   renderResearch();
   renderTimeline();
   bindProfileInputs();
+  bindCareerInputs();
 }
 
 function bindProfileInputs(){
-  const map = { 'p-name':'name', 'p-eyebrow':'eyebrow', 'p-tagline':'tagline', 'p-linkedin':'linkedin', 'p-email':'email', 'p-cv':'cvUrl' };
+  const map = { 'p-name':'name', 'p-eyebrow':'eyebrow', 'p-tagline':'tagline', 'p-shortbio':'shortBio', 'p-linkedin':'linkedin', 'p-email':'email', 'p-cv':'cvUrl' };
   Object.entries(map).forEach(([id, key]) => {
     document.getElementById(id).oninput = (e) => { state.profile[key] = e.target.value; };
   });
 }
 
-function renderSkills(){
-  const row = document.getElementById('skills-chips');
+function bindCareerInputs(){
+  const map = { 'career-current':'current', 'career-next':'next', 'career-longterm':'longTerm' };
+  Object.entries(map).forEach(([id, key]) => {
+    document.getElementById(id).oninput = (e) => { state.careerDirection[key] = e.target.value; };
+  });
+}
+
+// ---- generic chip-list helper (used for approach + research interests) ----
+function renderChipList(containerId, list, onRemove){
+  const row = document.getElementById(containerId);
   row.innerHTML = '';
-  state.skills.forEach((s, i) => {
+  list.forEach((s, i) => {
     const chip = document.createElement('span');
     chip.className = 'chip';
-    chip.innerHTML = `${escapeAttr(s)} <button type="button" data-i="${i}">✕</button>`;
-    chip.querySelector('button').onclick = () => { state.skills.splice(i,1); renderSkills(); };
+    chip.innerHTML = `${escapeAttr(s)} <button type="button">✕</button>`;
+    chip.querySelector('button').onclick = () => { onRemove(i); };
     row.appendChild(chip);
   });
 }
 
-function addSkill(){
-  const input = document.getElementById('skill-input');
+function renderApproachChips(){
+  renderChipList('approach-chips', state.professionalIdentity.approach, (i) => {
+    state.professionalIdentity.approach.splice(i,1); renderApproachChips();
+  });
+}
+function addApproach(){
+  const input = document.getElementById('approach-input');
   const val = input.value.trim();
   if(!val) return;
-  state.skills.push(val);
+  state.professionalIdentity.approach.push(val);
   input.value = '';
-  renderSkills();
+  renderApproachChips();
 }
-document.getElementById('skill-add-btn').onclick = addSkill;
-document.getElementById('skill-input').addEventListener('keydown', (e) => {
-  if(e.key === 'Enter'){ e.preventDefault(); addSkill(); }
+document.getElementById('approach-add-btn').onclick = addApproach;
+document.getElementById('approach-input').addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){ e.preventDefault(); addApproach(); }
 });
+
+function renderInterestChips(){
+  renderChipList('interests-chips', state.researchInterests, (i) => {
+    state.researchInterests.splice(i,1); renderInterestChips();
+  });
+}
+function addInterest(){
+  const input = document.getElementById('interest-input');
+  const val = input.value.trim();
+  if(!val) return;
+  state.researchInterests.push(val);
+  input.value = '';
+  renderInterestChips();
+}
+document.getElementById('interest-add-btn').onclick = addInterest;
+document.getElementById('interest-input').addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){ e.preventDefault(); addInterest(); }
+});
+
+// ---- categorized skills ----
+function renderSkillCategories(){
+  const wrap = document.getElementById('skills-categories-repeat');
+  wrap.innerHTML = '';
+  Object.keys(state.skills).forEach((category) => {
+    const list = state.skills[category];
+    const div = document.createElement('div');
+    div.className = 'repeat-item';
+    div.innerHTML = `
+      <button type="button" class="remove-btn" title="حذف دسته">✕</button>
+      <div class="field"><label>نام دسته‌بندی</label><input type="text" value="${escapeAttr(category)}" data-role="cat-name"></div>
+      <div class="chip-row" data-role="cat-chips"></div>
+      <div class="chip-add">
+        <input type="text" placeholder="مثلاً Python" data-role="cat-input">
+        <button type="button" class="add-btn" data-role="cat-add" style="margin-bottom:0;">افزودن</button>
+      </div>
+    `;
+    // remove whole category
+    div.querySelector('.remove-btn').onclick = () => { delete state.skills[category]; renderSkillCategories(); };
+    // rename category (preserve order + skills)
+    div.querySelector('[data-role="cat-name"]').addEventListener('change', (e) => {
+      const newName = e.target.value.trim();
+      if(!newName || newName === category) { e.target.value = category; return; }
+      const reordered = {};
+      Object.keys(state.skills).forEach(k => { reordered[k === category ? newName : k] = state.skills[k]; });
+      state.skills = reordered;
+      renderSkillCategories();
+    });
+    // chips within category
+    const chipRow = div.querySelector('[data-role="cat-chips"]');
+    function renderCatChips(){
+      chipRow.innerHTML = '';
+      list.forEach((s, i) => {
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.innerHTML = `${escapeAttr(s)} <button type="button">✕</button>`;
+        chip.querySelector('button').onclick = () => { list.splice(i,1); renderCatChips(); };
+        chipRow.appendChild(chip);
+      });
+    }
+    renderCatChips();
+    const catInput = div.querySelector('[data-role="cat-input"]');
+    function addCatSkill(){
+      const val = catInput.value.trim();
+      if(!val) return;
+      list.push(val);
+      catInput.value = '';
+      renderCatChips();
+    }
+    div.querySelector('[data-role="cat-add"]').onclick = addCatSkill;
+    catInput.addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); addCatSkill(); } });
+
+    wrap.appendChild(div);
+  });
+}
+document.getElementById('category-add-btn').onclick = () => {
+  let name = 'دسته جدید', n = 1;
+  while(state.skills[name] !== undefined){ n++; name = 'دسته جدید ' + n; }
+  state.skills[name] = [];
+  renderSkillCategories();
+};
 
 function renderProjects(){
   const wrap = document.getElementById('projects-repeat');
@@ -343,18 +494,28 @@ function renderProjects(){
     div.innerHTML = `
       <button type="button" class="remove-btn" title="حذف">✕</button>
       <div class="field"><label>عنوان پروژه</label><input type="text" value="${escapeAttr(proj.title)}" data-k="title"></div>
+      <div class="field"><label>زیرعنوان (اختیاری)</label><input type="text" value="${escapeAttr(proj.subtitle)}" data-k="subtitle"></div>
       <div class="field"><label>وضعیت</label><input type="text" value="${escapeAttr(proj.status)}" data-k="status" placeholder="مثلاً In progress"></div>
-      <div class="field"><label>توضیح کوتاه</label><textarea rows="2" data-k="description">${proj.description || ''}</textarea></div>
+      <div class="field"><label>حوزه (اختیاری)</label><input type="text" value="${escapeAttr(proj.domain)}" data-k="domain" placeholder="مثلاً Mineral Exploration · Computer Vision"></div>
+      <div class="field"><label>توضیح کوتاه</label><textarea rows="3" data-k="description">${proj.description || ''}</textarea></div>
+      <div class="field"><label>فناوری‌ها (با کاما جدا کن)</label><input type="text" value="${escapeAttr(tagsToInput(proj.technology))}" data-k="technology"></div>
+      <div class="field"><label>تمرکزها/Focus (با کاما جدا کن، اختیاری)</label><input type="text" value="${escapeAttr(tagsToInput(proj.focus))}" data-k="focus"></div>
+      <div class="field"><label>تأثیر/Impact (اختیاری)</label><textarea rows="2" data-k="impact">${proj.impact || ''}</textarea></div>
+      <div class="field"><label>دیتاست (اختیاری)</label><input type="text" value="${escapeAttr(proj.dataset)}" data-k="dataset"></div>
     `;
     div.querySelector('.remove-btn').onclick = () => { state.projects.splice(i,1); renderProjects(); };
     div.querySelectorAll('[data-k]').forEach(el => {
-      el.oninput = (e) => { proj[e.target.dataset.k] = e.target.value; };
+      const k = el.dataset.k;
+      el.oninput = (e) => {
+        if(k === 'technology' || k === 'focus') proj[k] = inputToTags(e.target.value);
+        else proj[k] = e.target.value;
+      };
     });
     wrap.appendChild(div);
   });
 }
 document.getElementById('project-add-btn').onclick = () => {
-  state.projects.push({ title: '', status: 'In progress', description: '' });
+  state.projects.push({ title: '', subtitle: '', status: 'In progress', domain: '', description: '', technology: [], focus: [], impact: '', dataset: '' });
   renderProjects();
 };
 
@@ -372,12 +533,16 @@ function renderResearch(){
       </div>
       <div class="field"><label>عنوان مقاله</label><input type="text" class="${isFa ? 'fa-input' : ''}" value="${escapeAttr(r.title)}" data-k="title"></div>
       <div class="field"><label>وضعیت</label><input type="text" value="${escapeAttr(r.status)}" data-k="status" placeholder="مثلاً Article / Published"></div>
+      <div class="field"><label>حوزه (اختیاری)</label><input type="text" value="${escapeAttr(r.domain)}" data-k="domain"></div>
       <div class="field"><label>چکیده کوتاه</label><textarea rows="3" class="${isFa ? 'fa-input' : ''}" data-k="description">${r.description || ''}</textarea></div>
+      <div class="field"><label>زمینه‌های پژوهشی (با کاما جدا کن، اختیاری)</label><input type="text" value="${escapeAttr(tagsToInput(r.researchAreas))}" data-k="researchAreas"></div>
     `;
     div.querySelector('.remove-btn').onclick = () => { state.research.splice(i,1); renderResearch(); };
     div.querySelectorAll('[data-k]').forEach(el => {
       if(el.dataset.k === 'lang'){
         el.onchange = (e) => { r.lang = e.target.checked ? 'fa' : 'en'; renderResearch(); };
+      } else if(el.dataset.k === 'researchAreas'){
+        el.oninput = (e) => { r.researchAreas = inputToTags(e.target.value); };
       } else {
         el.oninput = (e) => { r[e.target.dataset.k] = e.target.value; };
       }
@@ -386,7 +551,7 @@ function renderResearch(){
   });
 }
 document.getElementById('research-add-btn').onclick = () => {
-  state.research.push({ title: '', status: 'Article', lang: 'en', description: '' });
+  state.research.push({ title: '', status: 'Article', domain: '', lang: 'en', description: '', researchAreas: [] });
   renderResearch();
 };
 
@@ -400,7 +565,8 @@ function renderTimeline(){
       <button type="button" class="remove-btn" title="حذف">✕</button>
       <div class="field"><label>بازه زمانی</label><input type="text" value="${escapeAttr(t.period)}" data-k="period" placeholder="مثلاً 2022 — 2024"></div>
       <div class="field"><label>عنوان (مدرک یا سمت)</label><input type="text" value="${escapeAttr(t.title)}" data-k="title"></div>
-      <div class="field"><label>مؤسسه / شرکت و توضیح کوتاه</label><input type="text" value="${escapeAttr(t.org)}" data-k="org"></div>
+      <div class="field"><label>مؤسسه / شرکت</label><input type="text" value="${escapeAttr(t.org)}" data-k="org"></div>
+      <div class="field"><label>تمرکز (اختیاری)</label><input type="text" value="${escapeAttr(t.focus)}" data-k="focus"></div>
     `;
     div.querySelector('.remove-btn').onclick = () => { state.timeline.splice(i,1); renderTimeline(); };
     div.querySelectorAll('[data-k]').forEach(el => {
@@ -410,7 +576,7 @@ function renderTimeline(){
   });
 }
 document.getElementById('timeline-add-btn').onclick = () => {
-  state.timeline.push({ period: '', title: '', org: '' });
+  state.timeline.push({ period: '', title: '', org: '', focus: '' });
   renderTimeline();
 };
 
@@ -433,11 +599,7 @@ document.getElementById('file-input').addEventListener('change', (e) => {
   reader.onload = () => {
     try{
       state = JSON.parse(reader.result);
-      state.profile = state.profile || {};
-      state.skills = state.skills || [];
-      state.projects = state.projects || [];
-      state.research = state.research || [];
-      state.timeline = state.timeline || [];
+      normalizeState();
       render();
       const bar = document.getElementById('status-bar');
       bar.textContent = 'فایل با موفقیت بارگذاری شد.';

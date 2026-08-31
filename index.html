@@ -547,6 +547,97 @@ body{
   line-height: 1.6;
 }
 
+
+/* ---------- badges & tag pills (used in project/research cards) ---------- */
+.badge-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+.badge{
+  display:inline-block;
+  font-size:.72rem;
+  font-weight:500;
+  color: var(--secondary);
+  background: var(--fill);
+  border-radius:999px;
+  padding:4px 13px;
+}
+.badge.status-badge{ color: var(--ink); background: var(--fill); }
+.badge.domain-badge{ color: var(--secondary); background: transparent; border:1px solid var(--hairline); }
+
+.tech-tags{ display:flex; flex-wrap:wrap; gap:7px; margin: 14px 0; }
+.tech-tag{
+  font-size:.76rem;
+  color: var(--secondary);
+  border:1px solid var(--hairline);
+  border-radius:999px;
+  padding:4px 12px;
+}
+
+.impact-line{
+  font-size:.88rem;
+  color: var(--ink);
+  border-left: 2px solid var(--hairline);
+  padding-left: 14px;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+[dir="rtl"] .impact-line{ border-left:none; border-right:2px solid var(--hairline); padding-left:0; padding-right:14px; }
+
+.entry-sub{ color: var(--secondary); font-size: .95rem; margin: -4px 0 14px; }
+
+/* ---------- about section ---------- */
+.about-text{
+  max-width: 620px;
+  margin: 0 auto 26px;
+  text-align: center;
+  color: var(--secondary);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+.about-text strong{ color: var(--ink); font-weight: 500; }
+
+.approach-row{
+  display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom: 36px;
+}
+.approach-chip{
+  font-size:.78rem; font-weight:500; color: var(--ink);
+  background: var(--fill); border-radius:999px; padding:6px 14px;
+}
+
+.career-strip{
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: .88rem;
+  color: var(--secondary);
+}
+.career-strip .stage{
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  padding: 14px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  min-width: 170px;
+}
+.career-strip .stage .label{ font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color: var(--secondary); }
+.career-strip .stage .value{ font-size:.85rem; color: var(--ink); font-weight:500; text-align:center; }
+.career-strip .sep{ color: var(--hairline); font-size:1.1rem; }
+@media (max-width: 640px){ .career-strip .sep{ display:none; } }
+
+/* ---------- skill categories ---------- */
+.skill-category{ margin-bottom: 26px; }
+.skill-category:last-child{ margin-bottom: 0; }
+.skill-category .cat-label{
+  text-align:center;
+  font-size:.76rem;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color: var(--secondary);
+  margin: 0 0 12px;
+}
+
+
 @media (prefers-reduced-motion: reduce){
   *{ transition: none !important; animation: none !important; }
 }
@@ -619,12 +710,30 @@ body{
 
   </main>
 
+  <!-- About -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>About</h2>
+    </div>
+    <p class="about-text" id="about-bio"></p>
+    <div class="approach-row" id="approach-row"></div>
+    <div class="career-strip" id="career-strip"></div>
+  </section>
+
   <!-- Skills & Tools -->
   <section class="section reveal">
     <div class="section-head">
       <h2>Skills &amp; Tools</h2>
     </div>
-    <div class="skills-row" id="skills-row"></div>
+    <div id="skills-categories"></div>
+  </section>
+
+  <!-- Research Interests -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>Research Interests</h2>
+    </div>
+    <div class="skills-row" id="research-interests-row"></div>
   </section>
 
   <!-- Timeline -->
@@ -677,19 +786,15 @@ body{
 // Fallback content, used only if content.json can't be fetched (e.g. opened via file://)
 const FALLBACK_CONTENT = {
   "profile": { "name": "Mahdi Shabani", "eyebrow": "Machine Learning · Spatial Data Science",
-    "tagline": "Researching explainable, uncertainty-aware machine learning for spatial decision-making — from mineral prospectivity mapping to computer-vision classification.",
-    "cvUrl": "", "linkedin": "https://www.linkedin.com/in/mahdi-shabani1/", "email": "mshabani544@gmail.com" },
-  "skills": ["Python","Machine Learning","Deep Learning","Spatial / GIS Analysis","Uncertainty Quantification","Explainable AI (XAI)","Computer Vision"],
-  "projects": [
-    {"title":"Development of an Explainable and Uncertainty-Aware Machine Learning Framework for Spatial Decision-Making","status":"In progress","description":"Details coming soon."},
-    {"title":"MPM Using Machine Learning Algorithms","status":"In progress","description":"Details coming soon."}
-  ],
-  "research": [
-    {"title":"تشخیص نوع گوهرسنگ با استفاده از شبکه عصبی کانوولوشنی","status":"Article","lang":"fa","description":"چکیده مقاله را اینجا قرار دهید."}
-  ],
-  "timeline": [
-    {"period":"Year — Year","title":"Degree / Position Title","org":"Institution or company name."}
-  ]
+    "tagline": "Researching explainable, uncertainty-aware machine learning for spatial decision-making.",
+    "shortBio": "", "cvUrl": "", "linkedin": "https://www.linkedin.com/in/mahdi-shabani1/", "email": "mshabani544@gmail.com" },
+  "skills": {},
+  "projects": [],
+  "research": [],
+  "researchInterests": [],
+  "professionalIdentity": {},
+  "careerDirection": null,
+  "timeline": []
 };
 
 async function loadContent(){
@@ -713,9 +818,19 @@ function escapeHtml(str){
   return d.innerHTML;
 }
 
+// Turns a camelCase key like "spatialDataScience" into "Spatial Data Science"
+function humanizeKey(key){
+  return key.replace(/([a-z])([A-Z])/g, '$1 $2')
+            .replace(/^./, c => c.toUpperCase());
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await loadContent();
   const p = data.profile || {};
+  const contact = data.contact || {};
+  const email = p.email || contact.email;
+  const linkedin = p.linkedin || contact.linkedin;
+  const cvUrl = p.cvUrl || contact.cv;
 
   document.getElementById('hero-eyebrow').textContent = p.eyebrow || '';
   document.getElementById('hero-name').textContent = p.name || '';
@@ -725,17 +840,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.title = (p.name ? p.name + ' — ' : '') + (p.eyebrow || '');
 
   const cv = document.getElementById('hero-cv');
-  if(p.cvUrl){ cv.href = p.cvUrl; cv.removeAttribute('title'); }
+  if(cvUrl){ cv.href = cvUrl; cv.removeAttribute('title'); }
 
   const li = document.getElementById('profile-linkedin');
-  if(p.linkedin) li.href = p.linkedin;
+  if(linkedin) li.href = linkedin;
 
   const em = document.getElementById('profile-email');
   const copyTip = document.getElementById('email-copied-tip');
-  if(p.email){
-    em.href = 'mailto:' + p.email;
+  if(email){
+    em.href = 'mailto:' + email;
     em.addEventListener('click', () => {
-      navigator.clipboard?.writeText(p.email).then(() => {
+      navigator.clipboard?.writeText(email).then(() => {
         if(copyTip){
           copyTip.style.opacity = '1';
           setTimeout(() => { copyTip.style.opacity = '0'; }, 1800);
@@ -746,7 +861,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const form = document.getElementById('contact-form');
   const copyFallback = document.getElementById('copy-email-fallback');
-  if(form && p.email){
+  if(form && email){
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('cf-name').value;
@@ -754,29 +869,108 @@ document.addEventListener('DOMContentLoaded', async () => {
       const msg = document.getElementById('cf-message').value;
       const subject = encodeURIComponent('Message from ' + name + ' via website');
       const body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + from + ')');
-      window.location.href = `mailto:${p.email}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     });
   }
-  if(copyFallback && p.email){
+  if(copyFallback && email){
     copyFallback.addEventListener('click', (e) => {
       e.preventDefault();
-      navigator.clipboard?.writeText(p.email).then(() => {
+      navigator.clipboard?.writeText(email).then(() => {
         copyFallback.textContent = 'کپی شد ✓';
         setTimeout(() => { copyFallback.textContent = 'اینجا کپی کن'; }, 1800);
       }).catch(() => {});
     });
   }
 
-  // Skills
-  const skillsRow = document.getElementById('skills-row');
-  (data.skills || []).forEach(s => {
+  // ---- About: bio + approach chips + career direction strip ----
+  const bioEl = document.getElementById('about-bio');
+  const bioText = p.shortBio || p.tagline || '';
+  if(bioText) bioEl.textContent = bioText; else bioEl.style.display = 'none';
+
+  const approachRow = document.getElementById('approach-row');
+  const identity = data.professionalIdentity || {};
+  (identity.approach || []).forEach(a => {
     const span = document.createElement('span');
-    span.className = 'skill-chip';
-    span.innerHTML = `<span class="dot"></span>${escapeHtml(s)}`;
-    skillsRow.appendChild(span);
+    span.className = 'approach-chip';
+    span.textContent = a;
+    approachRow.appendChild(span);
   });
 
-  // Projects (home preview, up to 3)
+  const careerStrip = document.getElementById('career-strip');
+  const career = data.careerDirection;
+  if(career && (career.current || career.next || career.longTerm)){
+    const stages = [
+      ['Now', career.current],
+      ['Next', career.next],
+      ['Long-term', career.longTerm]
+    ].filter(([, v]) => v);
+    stages.forEach(([label, value], i) => {
+      const stage = document.createElement('div');
+      stage.className = 'stage';
+      stage.innerHTML = `<span class="label">${escapeHtml(label)}</span><span class="value">${escapeHtml(value)}</span>`;
+      careerStrip.appendChild(stage);
+      if(i < stages.length - 1){
+        const sep = document.createElement('span');
+        sep.className = 'sep';
+        sep.textContent = '→';
+        careerStrip.appendChild(sep);
+      }
+    });
+  } else {
+    careerStrip.style.display = 'none';
+  }
+
+  // Hide the whole About section if there's really nothing to show
+  if(!bioText && !(identity.approach || []).length && !career){
+    document.getElementById('about-bio').closest('section').style.display = 'none';
+  }
+
+  // ---- Skills: supports either a flat array or a categorized object ----
+  const skillsWrap = document.getElementById('skills-categories');
+  if (Array.isArray(data.skills)) {
+    const row = document.createElement('div');
+    row.className = 'skills-row';
+    data.skills.forEach(s => {
+      const span = document.createElement('span');
+      span.className = 'skill-chip';
+      span.textContent = s;
+      row.appendChild(span);
+    });
+    skillsWrap.appendChild(row);
+  } else if (data.skills && typeof data.skills === 'object') {
+    Object.entries(data.skills).forEach(([category, list]) => {
+      if(!Array.isArray(list) || !list.length) return;
+      const cat = document.createElement('div');
+      cat.className = 'skill-category';
+      const row = document.createElement('div');
+      row.className = 'skills-row';
+      list.forEach(s => {
+        const span = document.createElement('span');
+        span.className = 'skill-chip';
+        span.textContent = s;
+        row.appendChild(span);
+      });
+      cat.innerHTML = `<p class="cat-label">${escapeHtml(humanizeKey(category))}</p>`;
+      cat.appendChild(row);
+      skillsWrap.appendChild(cat);
+    });
+  }
+
+  // ---- Research interests ----
+  const riRow = document.getElementById('research-interests-row');
+  const riSection = riRow.closest('section');
+  if((data.researchInterests || []).length){
+    data.researchInterests.forEach(r => {
+      const span = document.createElement('span');
+      span.className = 'skill-chip';
+      span.textContent = r;
+      riRow.appendChild(span);
+    });
+  } else {
+    riSection.style.display = 'none';
+  }
+
+  // ---- Projects (home preview, up to 3) ----
   const projList = document.getElementById('projects-list');
   (data.projects || []).slice(0, 3).forEach((proj, i) => {
     const li = document.createElement('li');
@@ -784,7 +978,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     projList.appendChild(li);
   });
 
-  // Research (home preview, up to 3)
+  // ---- Research (home preview, up to 3) ----
   const resList = document.getElementById('research-list');
   (data.research || []).slice(0, 3).forEach((r, i) => {
     const li = document.createElement('li');
@@ -793,12 +987,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     resList.appendChild(li);
   });
 
-  // Timeline
+  // ---- Timeline (falls back to `education` array if `timeline` is absent) ----
   const tl = document.getElementById('timeline-list');
-  (data.timeline || []).forEach(item => {
+  const timelineData = (data.timeline && data.timeline.length)
+    ? data.timeline
+    : (data.education || []).map(e => ({ period: e.period, title: e.degree, org: e.field }));
+  timelineData.forEach(item => {
     const div = document.createElement('div');
     div.className = 'timeline-item';
-    div.innerHTML = `<p class="t-period">${escapeHtml(item.period)}</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.org)}</p>`;
+    const orgLine = item.focus ? `${escapeHtml(item.org)} — ${escapeHtml(item.focus)}` : escapeHtml(item.org);
+    div.innerHTML = `<p class="t-period">${escapeHtml(item.period)}</p><h3>${escapeHtml(item.title)}</h3><p>${orgLine}</p>`;
     tl.appendChild(div);
   });
 });

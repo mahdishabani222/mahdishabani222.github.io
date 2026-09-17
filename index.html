@@ -849,7 +849,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.title = (p.name ? p.name + ' — ' : '') + (p.eyebrow || '');
 
   const cv = document.getElementById('hero-cv');
-  if(cvUrl){ cv.href = cvUrl; cv.removeAttribute('title'); }
+  if(cvUrl){ cv.href = cvUrl; cv.target = '_blank'; cv.rel = 'noopener'; cv.removeAttribute('title'); }
 
   const li = document.getElementById('profile-linkedin');
   if(linkedin) li.href = linkedin;

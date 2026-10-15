@@ -381,5 +381,5 @@
 
   window.SiteI18n = { getLanguage, setLanguage, ui, localizeContent, updateDocumentMeta };
   updateDocumentMeta();
-  document.addEventListener('DOMContentLoaded', updateDocumentMeta);
+  document.addEventListener('DOMContentLoaded', () => setTimeout(updateDocumentMeta, 0));
 })();

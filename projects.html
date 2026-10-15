@@ -651,7 +651,7 @@ body{
   *{ transition: none !important; animation: none !important; }
 }
 </style>
-<script src="site.js?v=20261021"></script>
+<script src="site.js?v=20261022"></script>
 </head>
 <body>
 
@@ -754,7 +754,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
   }
-  if (window.SiteI18n) window.SiteI18n.updateDocumentMeta();
+  if (window.SiteI18n) {
+    window.SiteI18n.updateDocumentMeta();
+    if (window.SiteI18n.getLanguage() === 'fa') {
+      document.querySelector('.page-header h1').textContent = 'پروژه‌های در حال انجام';
+      document.querySelector('.page-header p').textContent = 'فهرستی از پروژه‌هایی که در حال ساخت و پژوهش روی آن‌ها هستم.';
+    }
+  }
 });
 </script>
 <script>

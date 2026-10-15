@@ -295,12 +295,12 @@
     if (footer) footer.innerHTML = `© <span id="year"></span> <span id="footer-name">${footer.querySelector('#footer-name')?.textContent || (getLanguage() === 'fa' ? 'مهدی شعبانی' : 'Mahdi Shabani')}</span>. ${ui('allRights')}`;
     setText('.page-header .back-link', ui('home'));
     const isInnerPage = !!document.querySelector('.page-header');
-    if (document.getElementById('projects-list') && isInnerPage) {
+    if (path.endsWith('projects.html') && isInnerPage) {
       setText('.page-header h1', ui('ongoingProjects'));
       setText('.page-header p', ui('projectsIntro'));
       setText('.box h2', ui('ongoingProjects'));
     }
-    if (document.getElementById('research-list') && isInnerPage) {
+    if (path.endsWith('research.html') && isInnerPage) {
       setText('.page-header h1', ui('research'));
       setText('.page-header p', ui('researchIntro'));
       const boxHead = document.querySelector('.box h2');

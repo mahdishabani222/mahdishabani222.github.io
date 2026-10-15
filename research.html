@@ -768,5 +768,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('site-language') === 'fa') {
+    document.querySelector('.page-header h1').textContent = 'پژوهش‌ها و مقالات';
+    document.querySelector('.page-header p').textContent = 'مقالات منتشرشده و پژوهش‌های در حال انجام.';
+  }
+});
+</script>
 </body>
 </html>

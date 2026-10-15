@@ -651,7 +651,7 @@ body{
   *{ transition: none !important; animation: none !important; }
 }
 </style>
-<script src="site.js?v=20261018"></script>
+<script src="site.js?v=20261019"></script>
 </head>
 <body>
 
@@ -743,6 +743,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
   }
+  if (window.SiteI18n) window.SiteI18n.updateDocumentMeta();
 });
 </script>
 <script>

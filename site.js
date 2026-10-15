@@ -50,7 +50,10 @@
       addProject: '+ Add project',
       addResearch: '+ Add research',
       addTimeline: '+ Add item',
-      addCategory: '+ Add category'
+      addCategory: '+ Add category',
+      now: 'Now',
+      next: 'Next',
+      longTerm: 'Long-term'
     },
     fa: {
       languageButton: 'EN',
@@ -97,7 +100,10 @@
       addProject: '+ افزودن پروژه',
       addResearch: '+ افزودن پژوهش',
       addTimeline: '+ افزودن مورد',
-      addCategory: '+ افزودن دسته‌بندی جدید'
+      addCategory: '+ افزودن دسته‌بندی جدید',
+      now: 'اکنون',
+      next: 'بعدی',
+      longTerm: 'بلندمدت'
     }
   };
 
@@ -183,7 +189,10 @@
   function setText(selector, value) {
     const element = document.querySelector(selector);
     if (!element || value == null) return;
-    const directText = Array.from(element.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+    const directText = Array.from(element.childNodes)
+      .filter(node => node.nodeType === Node.TEXT_NODE)
+      .reverse()
+      .find(node => node.nodeValue.trim());
     if (directText) directText.textContent = value;
     else element.textContent = value;
   }
@@ -265,11 +274,16 @@
       sectionHeads[1].textContent = ui('education');
       sectionHeads[2].textContent = ui('contact');
     }
-    setText('#contact-form .section-head p', ui('contactIntro'));
+    const contactNotes = document.querySelectorAll('.section-head p');
+    if (contactNotes.length) contactNotes[contactNotes.length - 1].textContent = ui('contactIntro');
     setText('label[for="cf-name"]', ui('name'));
     setText('label[for="cf-email"]', ui('email'));
     setText('label[for="cf-message"]', ui('message'));
     setText('.form-submit', ui('send'));
+    const careerLabels = document.querySelectorAll('.career-strip .label');
+    if (careerLabels[0]) careerLabels[0].textContent = ui('now');
+    if (careerLabels[1]) careerLabels[1].textContent = ui('next');
+    if (careerLabels[2]) careerLabels[2].textContent = ui('longTerm');
     const note = document.querySelector('.form-note');
     if (note) {
       const fallback = note.querySelector('#copy-email-fallback');

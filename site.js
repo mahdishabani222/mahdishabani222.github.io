@@ -12,10 +12,10 @@
       home: 'Back home',
       ongoingProjects: 'Ongoing Projects',
       projectsIntro: "A working list of what I'm currently building and researching.",
-      research: 'Research',
-      researchIntro: 'Published and ongoing research work.',
+      research: 'Research & Articles',
+      researchIntro: 'Published articles and ongoing research work.',
       viewProjects: 'View all projects',
-      viewResearch: 'View all research',
+      viewResearch: 'View all research & articles',
       connect: "Let's connect",
       about: 'About',
       skills: 'Skills & Tools',
@@ -42,7 +42,7 @@
       interestsCard: 'Research interests',
       skillsCard: 'Skills & Tools',
       projectsCard: 'Ongoing projects',
-      researchCard: 'Research / Articles',
+      researchCard: 'Research & Articles',
       timelineCard: 'Education and experience',
       downloadJson: 'Download content.json',
       uploadJson: 'Load existing content.json',
@@ -62,10 +62,10 @@
       home: 'بازگشت به خانه',
       ongoingProjects: 'پروژه‌های در حال انجام',
       projectsIntro: 'فهرستی از پروژه‌هایی که در حال ساخت و پژوهش روی آن‌ها هستم.',
-      research: 'پژوهش‌ها',
-      researchIntro: 'پژوهش‌ها و مقالات منتشرشده یا در حال انجام.',
+      research: 'پژوهش‌ها و مقالات',
+      researchIntro: 'مقالات منتشرشده و پژوهش‌های در حال انجام.',
       viewProjects: 'مشاهدهٔ همهٔ پروژه‌ها',
-      viewResearch: 'مشاهدهٔ همهٔ پژوهش‌ها',
+      viewResearch: 'مشاهدهٔ همهٔ پژوهش‌ها و مقالات',
       connect: 'ارتباط با من',
       about: 'دربارهٔ من',
       skills: 'مهارت‌ها و ابزارها',
@@ -92,7 +92,7 @@
       interestsCard: 'علایق پژوهشی',
       skillsCard: 'مهارت‌ها و ابزارها',
       projectsCard: 'پروژه‌های در حال انجام',
-      researchCard: 'پژوهش‌ها / مقالات',
+      researchCard: 'پژوهش‌ها و مقالات',
       timelineCard: 'تحصیلات و تجربه',
       downloadJson: 'دانلود content.json',
       uploadJson: 'بارگذاری فایل content.json موجود',
@@ -258,13 +258,12 @@
   function translatePublicUi() {
     setAttr('#theme-toggle', 'aria-label', ui('themeLabel'));
     setText('.profile-box .role', ui('connect'));
-    setText('.cv-btn', ui('downloadCv'));
+    setText('.mark', getLanguage() === 'fa' ? 'م. شعبانی' : 'M. Shabani');
     setText('.more-link[href="projects.html"]', ui('viewProjects'));
     setText('.more-link[href="research.html"]', ui('viewResearch'));
-    setText('.section-head h2', ui('about'));
     const sectionHeads = Array.from(document.querySelectorAll('.section-head h2'));
     if (sectionHeads.length >= 5) {
-      setText('.section-head:nth-of-type(2) h2', ui('skills'));
+      sectionHeads[0].textContent = ui('about');
       sectionHeads[1].textContent = ui('skills');
       sectionHeads[2].textContent = ui('interests');
       sectionHeads[3].textContent = ui('education');
@@ -273,6 +272,8 @@
       sectionHeads[0].textContent = ui('skills');
       sectionHeads[1].textContent = ui('education');
       sectionHeads[2].textContent = ui('contact');
+    } else if (!document.querySelector('.page-header') && sectionHeads[0]) {
+      sectionHeads[0].textContent = ui('contact');
     }
     const contactNotes = document.querySelectorAll('.section-head p');
     if (contactNotes.length) contactNotes[contactNotes.length - 1].textContent = ui('contactIntro');
@@ -291,7 +292,7 @@
       if (fallback) fallback.textContent = ui('copyEmail');
     }
     const footer = document.querySelector('.site-footer');
-    if (footer) footer.innerHTML = `© <span id="year"></span> <span id="footer-name">${footer.querySelector('#footer-name')?.textContent || 'Mahdi Shabani'}</span>. ${ui('allRights')}`;
+    if (footer) footer.innerHTML = `© <span id="year"></span> <span id="footer-name">${footer.querySelector('#footer-name')?.textContent || (getLanguage() === 'fa' ? 'مهدی شعبانی' : 'Mahdi Shabani')}</span>. ${ui('allRights')}`;
     setText('.page-header .back-link', ui('home'));
     const isInnerPage = !!document.querySelector('.page-header');
     if (document.getElementById('projects-list') && isInnerPage) {

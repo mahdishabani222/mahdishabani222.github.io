@@ -651,7 +651,7 @@ body{
   *{ transition: none !important; animation: none !important; }
 }
 </style>
-<script src="site.js?v=20261018"></script>
+<script src="site.js?v=20261019"></script>
 </head>
 <body>
 
@@ -1009,6 +1009,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     div.innerHTML = `<p class="t-period">${escapeHtml(item.period)}</p><h3>${escapeHtml(item.title)}</h3><p>${orgLine}</p>`;
     tl.appendChild(div);
   });
+  if (window.SiteI18n) window.SiteI18n.updateDocumentMeta();
 });
 </script>
 <script>

@@ -1,8 +1,8 @@
 {
   "profile": {
     "name": "Mahdi Shabani",
-    "eyebrow": "Machine Learning · Spatial Data Science · Mineral Exploration",
-    "tagline": "Building explainable and uncertainty-aware AI systems for spatial decision-making, with applications in mineral exploration and intelligent geoscience.",
+    "eyebrow": "Projects · Research · Articles",
+    "tagline": "Projects, research, and articles on explainable AI, uncertainty-aware machine learning, and spatial data science.",
     "shortBio": "Machine Learning researcher focused on spatial data science, explainable AI, uncertainty quantification, and computer vision for mineral exploration.",
     "cvUrl": "assets/Mahdi-Shabani-CV.pdf",
     "linkedin": "https://www.linkedin.com/in/mahdi-shabani1/",
@@ -188,9 +188,10 @@
   "translations": {
     "fa": {
       "profile": {
-        "eyebrow": "یادگیری ماشین · علم دادهٔ مکانی · اکتشاف معدن",
-        "tagline": "ساخت سامانه‌های هوش مصنوعی توضیح‌پذیر و آگاه از عدم‌قطعیت برای تصمیم‌گیری مکانی، با کاربرد در اکتشاف معدن و علوم زمین هوشمند.",
-        "shortBio": "پژوهشگر یادگیری ماشین با تمرکز بر علم دادهٔ مکانی، هوش مصنوعی توضیح‌پذیر، کمّی‌سازی عدم‌قطعیت و بینایی ماشین برای اکتشاف معدن."
+        "eyebrow": "پروژه‌ها · پژوهش‌ها · مقالات",
+        "tagline": "پروژه‌ها، پژوهش‌ها و مقالات دربارهٔ هوش مصنوعی توضیح‌پذیر، یادگیری ماشین آگاه از عدم‌قطعیت و علم دادهٔ مکانی.",
+        "shortBio": "پژوهشگر یادگیری ماشین با تمرکز بر علم دادهٔ مکانی، هوش مصنوعی توضیح‌پذیر، کمّی‌سازی عدم‌قطعیت و بینایی ماشین برای اکتشاف معدن.",
+        "name": "مهدی شعبانی"
       },
       "skills": {
         "یادگیری ماشین": [

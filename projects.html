@@ -651,6 +651,7 @@ body{
   *{ transition: none !important; animation: none !important; }
 }
 </style>
+<script src="site.js"></script>
 </head>
 <body>
 
@@ -700,10 +701,10 @@ async function loadContent(){
   try{
     const res = await fetch('content.json', { cache: 'no-store' });
     if(!res.ok) throw new Error('bad response');
-    return await res.json();
+    return window.SiteI18n.localizeContent(await res.json());
   }catch(e){
     console.warn('Could not load content.json, using fallback content.', e);
-    return FALLBACK_CONTENT;
+    return window.SiteI18n.localizeContent(FALLBACK_CONTENT);
   }
 }
 

@@ -379,7 +379,25 @@
     else translatePublicUi();
   }
 
+  function watchDynamicPublicUi() {
+    const careerStrip = document.getElementById('career-strip');
+    if (!careerStrip) return;
+    let translating = false;
+    const observer = new MutationObserver(() => {
+      if (translating || getLanguage() !== 'fa') return;
+      const labels = Array.from(careerStrip.querySelectorAll('.label'));
+      if (!labels.some(label => /^(Now|Next|Long-term)$/.test(label.textContent.trim()))) return;
+      translating = true;
+      translatePublicUi();
+      translating = false;
+    });
+    observer.observe(careerStrip, { childList: true, subtree: true, characterData: true });
+  }
+
   window.SiteI18n = { getLanguage, setLanguage, ui, localizeContent, updateDocumentMeta };
   updateDocumentMeta();
-  document.addEventListener('DOMContentLoaded', () => setTimeout(updateDocumentMeta, 0));
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(updateDocumentMeta, 0);
+    watchDynamicPublicUi();
+  });
 })();

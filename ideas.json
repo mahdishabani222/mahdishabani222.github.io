@@ -1,0 +1,263 @@
+{
+  "updated": "October 2026",
+  "categories": [
+    {
+      "id": "exploration",
+      "title": "Exploration",
+      "description": "Finding and ranking targets before a mine exists.",
+      "ideas": [
+        {
+          "id": "survey-bias-audit",
+          "title": "Survey-Bias Audit for Prospectivity Models",
+          "status": "Under-explored",
+          "summary": "Test whether a prospectivity map is finding geology or only echoing where people already explored.",
+          "problem": "Known deposits cluster in well-explored areas and familiar deposit types, so models can reinforce old exploration habits and rank under-explored ground too low.",
+          "approach": "Re-score maps with spatial sampling-bias corrections, simulate what the map would say if every area had been explored equally, and publish a bias score next to every target.",
+          "evidence": "Industry talks (SMEDG, 2026) list bias toward well-explored regions as a core risk, and negative-label handling in prospectivity mapping was called a neglected area (EGU, 2024). I found no standard audit method.",
+          "start": "Take one public dataset, hide the best-explored 30% of the area, and measure how the ranking of the rest shifts.",
+          "sources": [
+            {"label": "SMEDG talk, 2026", "url": "https://smedg.org.au/wp-content/uploads/2026/04/Hojat-Shirmard-AI-in-Mineral-Exploration.pdf"},
+            {"label": "EGU 2024, negative training labels", "url": "https://meetingorganizer.copernicus.org/EGU24/EGU24-820.html"}
+          ]
+        },
+        {
+          "id": "explanation-to-field-test",
+          "title": "From Explanation to Field Test",
+          "status": "To verify",
+          "summary": "Turn a model's explanation into ranked geological hypotheses, each paired with the cheapest survey that could confirm it.",
+          "problem": "Explainability tools show which data layers drove a score, but the geologist still has to decide what to do next.",
+          "approach": "Map feature attributions to deposit-model hypotheses, then choose the confirming measurement (soil line, geophysical profile, one hole) with the best information per dollar.",
+          "evidence": "Explainable AI is common in prospectivity research. I did not find tools that link explanations to survey design, but this needs a proper literature check.",
+          "start": "Pair the SHAP output of an existing model with a small table of cost and information value per survey type.",
+          "sources": []
+        },
+        {
+          "id": "failed-target-taxonomy",
+          "title": "Post-Mortem Learning from Failed Targets",
+          "status": "Under-explored",
+          "summary": "Classify why AI-ranked targets failed, and predict the likely failure mode before drilling.",
+          "problem": "False positives are usually fed back only as extra training labels, so the reason for failure (cover, alteration mismatch, structure, data gap) is lost.",
+          "approach": "Build a library of failed targets labelled with causes, then train a second model that flags targets at risk of each failure mode.",
+          "evidence": "A 2025 district case study reports using false positives to retune its model, without analysing their causes (IIMP, WMC proceedings).",
+          "start": "Review 20 failed targets from one district and tag each with a simple cause list.",
+          "sources": [
+            {"label": "IIMP, AI and Data-Driven Decision Making", "url": "https://iimp.org.pe/WMC/actas/Track-1-AI-and-Data-Driven-Decision-Making/22/"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "planning",
+      "title": "Resource & Planning",
+      "description": "Turning drill data into resource models and mine plans.",
+      "ideas": [
+        {
+          "id": "core-loss-uncertainty",
+          "title": "Core-Loss Uncertainty in Resource Models",
+          "status": "To verify",
+          "summary": "Carry the effect of lost core into grade and density uncertainty instead of ignoring it.",
+          "problem": "Poor core recovery biases grades, yet resource models usually treat the recovered sample as representative.",
+          "approach": "Learn how recovery relates to rock type and drilling parameters, then propagate it as extra uncertainty or a bias correction in estimation.",
+          "evidence": "2026 work uses machine learning to adapt drilling parameters and reduce core loss. I did not find work on propagating the remaining loss into resource models.",
+          "start": "On one project, compare grades from high- and low-recovery intervals within the same domain.",
+          "sources": [
+            {"label": "Adaptive control of drilling to reduce core loss, 2026", "url": "https://znp.nmu.org.ua/pdf/2026/84/5.pdf"}
+          ]
+        },
+        {
+          "id": "reconciliation-learning",
+          "title": "Reconciliation-Driven Model Correction",
+          "status": "To verify",
+          "summary": "Use years of model-versus-mill reconciliation to find where a resource model is systematically wrong.",
+          "problem": "Reconciliation factors are reported as site-wide numbers, which hides spatial and domain-specific bias.",
+          "approach": "Train a model on reconciliation residuals by domain, depth and rock type, and use it to adjust short-term plans with stated uncertainty.",
+          "evidence": "Machine-learning grade control is well studied (for example Carmen de Andacollo, 2020). I did not confirm work built on reconciliation history.",
+          "start": "Plot monthly reconciliation errors by block and domain.",
+          "sources": []
+        },
+        {
+          "id": "life-of-mine-scenario-agent",
+          "title": "Scenario Agent for Life-of-Mine Plans",
+          "status": "To verify",
+          "summary": "An agent that generates and stress-tests alternative mine plans under price, cost and permitting shocks.",
+          "problem": "Strategic plans are re-run rarely because each scenario takes weeks of specialist time.",
+          "approach": "Pair a schedule optimizer with an LLM orchestrator that proposes scenarios, runs them, and explains which assumptions break the plan.",
+          "evidence": "Not verified. Operational AI agents are widely marketed, but I did not find an open, auditable approach for strategic scheduling.",
+          "start": "Automate three scenarios on a small open-pit schedule.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "Extraction & Operations",
+      "description": "Drilling, blasting, loading and hauling.",
+      "ideas": [
+        {
+          "id": "haul-road-telemetry",
+          "title": "Haul Roads Mapped from Truck Telemetry",
+          "status": "To verify",
+          "summary": "Estimate rolling resistance and road condition from data trucks already record.",
+          "problem": "Poor roads waste fuel and tyres, but inspection is manual and sparse.",
+          "approach": "Infer resistance from payload, speed and fuel signals, map it along each route, and trigger grading where it is worst.",
+          "evidence": "Not verified.",
+          "start": "Take one month of fleet telemetry and compare fuel burn on one road segment over time.",
+          "sources": []
+        },
+        {
+          "id": "dilution-forensics",
+          "title": "Dilution Forensics",
+          "status": "To verify",
+          "summary": "Trace each unit of ore dilution back to its probable cause.",
+          "problem": "Dilution is measured but rarely attributed, so fixes often target the wrong stage.",
+          "approach": "Link drilling, blasting, loading and survey data, and model which factor best explains each dilution event.",
+          "evidence": "Not verified. Sensor systems for blast characterisation exist (for example Imdex BLASTDOG), but attributing causes is a separate question.",
+          "start": "Pick 50 benches with known dilution and test which logged factors predict it.",
+          "sources": []
+        },
+        {
+          "id": "energy-aware-dispatch",
+          "title": "Energy-Aware Fleet Dispatch",
+          "status": "To verify",
+          "summary": "Schedule haulage around electricity prices and renewable supply.",
+          "problem": "Electrified fleets and on-site solar make energy cost and supply vary by the hour, but dispatch rules ignore it.",
+          "approach": "Add energy price and battery state to the dispatch optimizer, and learn supply forecasts.",
+          "evidence": "Not verified.",
+          "start": "Simulate a small electric fleet with hourly price data.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "processing",
+      "title": "Mineral Processing",
+      "description": "Crushing, grinding, flotation and leaching.",
+      "ideas": [
+        {
+          "id": "federated-metallurgy",
+          "title": "Federated Learning for Metallurgical Plants",
+          "status": "Under-explored",
+          "summary": "Let plants learn from each other's process data without sharing it.",
+          "problem": "Plants treat similar ores but guard their data, so each model learns from limited history.",
+          "approach": "Train shared models with federated learning, handling very different ores and sensors across sites.",
+          "evidence": "Federated learning has been tested for underground mine safety (FedMining, December 2025) and for chemical plants (2026). I found nothing for mineral processing.",
+          "start": "Simulate three plants with different ore types and compare local-only and federated models.",
+          "sources": [
+            {"label": "FedMining, underground safety", "url": "https://arxiv.org/abs/2512.08862v1"},
+            {"label": "Federated learning for chemical plants", "url": "https://arxiv.org/pdf/2604.26073"}
+          ]
+        },
+        {
+          "id": "recycled-water-chemistry",
+          "title": "Recycled Process Water Twin",
+          "status": "To verify",
+          "summary": "Predict how impurities in recycled water will change flotation or leaching performance.",
+          "problem": "As water use is cut, dissolved species build up and degrade recovery in ways operators discover late.",
+          "approach": "Combine water-chemistry assays with process data to forecast the impact and recommend bleed or treatment.",
+          "evidence": "Not verified.",
+          "start": "Correlate water assays with recovery at a single plant.",
+          "sources": []
+        },
+        {
+          "id": "heap-leach-bridge",
+          "title": "Bridging Column Tests and Heap Data",
+          "status": "To verify",
+          "summary": "Learn how lab column results translate into full-scale heap performance.",
+          "problem": "Models are mostly fitted on lab tests, but heaps behave differently at scale.",
+          "approach": "Use transfer learning with uncertainty to adjust lab-based predictions using heap monitoring data.",
+          "evidence": "Reviews describe mostly lab-scale machine learning for leaching. I did not confirm industrial transfer work.",
+          "start": "Compare column and heap recovery curves from one operation.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "environment",
+      "title": "Tailings, Water & Closure",
+      "description": "Managing waste, water and the end of mine life.",
+      "ideas": [
+        {
+          "id": "closure-forecasting",
+          "title": "Closure Success Forecasting",
+          "status": "Under-explored",
+          "summary": "Predict years ahead whether a rehabilitated site will recover ecologically, not just turn green.",
+          "problem": "Greening indices can mislead. A 2026 study found only 41.8% of mine-affected pixels followed vegetated recovery paths.",
+          "approach": "Combine satellite time series with soil and landform data to forecast recovery trajectories and flag likely failures early.",
+          "evidence": "Remote-sensing monitoring is established, but a mine-rehabilitation study notes that no appropriate model predicts rehabilitation, and 2026 work calls full recovery assessments rare.",
+          "start": "Use public Landsat history for one closed mine and test whether the first three years predict year ten.",
+          "sources": [
+            {"label": "Remote Sensing, June 2026", "url": "https://mdpi-res.com/d_attachment/remotesensing/remotesensing-18-01945/article_deploy/remotesensing-18-01945.pdf"},
+            {"label": "University of New England thesis", "url": "https://rune.une.edu.au/web/handle/1959.11/6453"}
+          ]
+        },
+        {
+          "id": "tailings-as-ore-maps",
+          "title": "Tailings as Ore Maps",
+          "status": "Emerging",
+          "summary": "Map critical metals inside legacy tailings the way resource geologists map orebodies.",
+          "problem": "Tailings are sampled sparsely, so their metal content and variability are poorly known.",
+          "approach": "Combine sparse samples, deposition history and processing records in a spatial model that outputs grade with uncertainty.",
+          "evidence": "Geoscience Australia notes the by-product potential of mine waste, while AI work on tailings centres on stability monitoring (for example a 2026 TU Delft research post).",
+          "start": "Model a single tailings dam using historic assays by deposition year.",
+          "sources": [
+            {"label": "Geoscience Australia, by-product potential", "url": "https://ga.gov.au/scientific-topics/minerals/australian-critical-minerals-research-and-development-hub/critical-mineral-by-product-potential"},
+            {"label": "TU Delft, tailings monitoring and AI", "url": "https://careers.tudelft.nl/job/Delft-Postdoc-Multiscale-Sensing-and-AI-for-Tailings-Storage-Facility-Monitoring-2628-CD/825565502"}
+          ]
+        },
+        {
+          "id": "acid-drainage-forecast",
+          "title": "Long-Horizon Acid Drainage Forecasting",
+          "status": "To verify",
+          "summary": "Forecast water quality decades after closure with physics-informed machine learning.",
+          "problem": "Acid and metal-laden drainage can appear long after mining ends.",
+          "approach": "Blend geochemical models with monitoring data to forecast with quantified uncertainty.",
+          "evidence": "Not verified.",
+          "start": "Fit a simple model to ten years of monitoring data at one site.",
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "supply",
+      "title": "Critical Minerals & Supply Chain",
+      "description": "From concentrate to market.",
+      "ideas": [
+        {
+          "id": "companion-metal-deportment",
+          "title": "Companion-Metal Deportment Tracker",
+          "status": "Under-explored",
+          "summary": "Follow gallium, germanium and indium through the plant to find where they are lost.",
+          "problem": "Companion metals are rarely measured, so their recoverable amount is unknown.",
+          "approach": "Predict their concentration in each plant stream from ore chemistry and mineralogy, then rank the cheapest recovery points.",
+          "evidence": "Geoscience Australia is estimating in-situ gallium, germanium and indium in zinc deposits with random forests, and notes about half of Australia's critical minerals are co-products. I found no stream-level tracking.",
+          "start": "Combine published sphalerite chemistry with a plant mass balance.",
+          "sources": [
+            {"label": "Geoscience Australia, by-product potential", "url": "https://ga.gov.au/scientific-topics/minerals/australian-critical-minerals-research-and-development-hub/critical-mineral-by-product-potential"}
+          ]
+        },
+        {
+          "id": "permitting-time",
+          "title": "Permitting-Time Forecasting",
+          "status": "To verify",
+          "summary": "Forecast how long a project will take to permit.",
+          "problem": "Permit delays can erode project value, but timelines are usually guessed.",
+          "approach": "Learn from past permit records and documents to give a time range with its drivers.",
+          "evidence": "Not verified.",
+          "start": "Collect public permit timelines for one jurisdiction.",
+          "sources": []
+        },
+        {
+          "id": "penalty-element-warning",
+          "title": "Penalty-Element Early Warning",
+          "status": "To verify",
+          "summary": "Predict contaminants in concentrate before shipment.",
+          "problem": "Elements such as arsenic raise smelter penalties and can block sales.",
+          "approach": "Predict them from ore chemistry and plant data, and suggest blending to stay under limits.",
+          "evidence": "Not verified.",
+          "start": "Compare historical shipment assays with upstream ore data.",
+          "sources": []
+        }
+      ]
+    }
+  ]
+}

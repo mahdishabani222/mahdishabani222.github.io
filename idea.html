@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){try{var s=localStorage.getItem('site-theme');if(s==='dark'||s==='light')document.documentElement.setAttribute('data-theme',s);}catch(e){}})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Idea — Mahdi Shabani</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="style.css">
+<style>
+.detail h1{font-size:clamp(1.9rem,4vw,2.5rem);margin:0 0 14px}
+.lead{font-size:1.08rem;color:var(--secondary);line-height:1.65;margin:0 0 34px}
+.block{margin:0 0 28px}
+.block h2{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:1rem;color:var(--gold-deep);margin:0 0 8px}
+.block p{margin:0;line-height:1.75;font-size:.98rem}
+.src{margin:0;padding-left:18px;font-size:.9rem;line-height:1.8}
+.src a{color:var(--gold-deep)}
+.badge.s-Under-explored{color:var(--gold-deep);background:var(--gold-tint)}
+.badge.s-Emerging,.badge.s-To{color:var(--secondary);background:var(--fill)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a href="index.html" class="mark">M. Shabani</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
+    </button>
+  </header>
+
+  <div class="page-header detail">
+    <a class="back-link" id="back" href="ideas.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>All ideas</a>
+    <div id="body"></div>
+  </div>
+
+  <footer class="site-footer">© <span id="year"></span> <span id="footer-name">Mahdi Shabani</span>. All rights reserved.</footer>
+</div>
+
+<script>
+function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('theme-toggle').addEventListener('click',()=>{
+  const r=document.documentElement,n=r.getAttribute('data-theme')==='dark'?'light':'dark';
+  r.setAttribute('data-theme',n);try{localStorage.setItem('site-theme',n);}catch(e){}
+});
+(async()=>{
+  const body=document.getElementById('body');
+  const id=new URLSearchParams(location.search).get('id');
+  try{
+    const res=await fetch('ideas.json',{cache:'no-store'});
+    if(!res.ok)throw 0;
+    const data=await res.json();
+    let found=null,cat=null;
+    data.categories.forEach(c=>c.ideas.forEach(i=>{if(i.id===id){found=i;cat=c;}}));
+    if(!found){body.innerHTML='<h1>Idea not found</h1><p class="lead">Go back to the <a href="ideas.html">list of ideas</a>.</p>';return;}
+    document.title=found.title+' — Mahdi Shabani';
+    document.getElementById('back').href='ideas.html#'+cat.id;
+    const sources=(found.sources||[]).map(s=>'<li><a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.label)+'</a></li>').join('');
+    body.innerHTML=
+      '<div class="badge-row"><span class="badge">'+esc(cat.title)+'</span><span class="badge s-'+esc(found.status.split(' ')[0])+'">'+esc(found.status)+'</span></div>'+
+      '<h1>'+esc(found.title)+'</h1><p class="lead">'+esc(found.summary)+'</p>'+
+      '<div class="block"><h2>The problem</h2><p>'+esc(found.problem)+'</p></div>'+
+      '<div class="block"><h2>The AI approach</h2><p>'+esc(found.approach)+'</p></div>'+
+      '<div class="block"><h2>What exists today</h2><p>'+esc(found.evidence)+'</p></div>'+
+      '<div class="block"><h2>A first step</h2><p>'+esc(found.start)+'</p></div>'+
+      (sources?'<div class="block"><h2>Sources</h2><ul class="src">'+sources+'</ul></div>':'');
+  }catch(e){
+    body.innerHTML='<h1>Could not load the idea</h1><p class="lead">Open the site through a local server or GitHub Pages, not by double-clicking the file.</p>';
+  }
+})();
+</script>
+</body>
+</html>

@@ -13,8 +13,8 @@
   })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mahdi Shabani — Projects, Research &amp; Articles</title>
-<meta name="description" content="Mahdi Shabani — projects, articles, and research on explainable AI, uncertainty-aware machine learning, and spatial data science.">
+<title>Mahdi Shabani — Machine Learning &amp; Spatial Data Science</title>
+<meta name="description" content="Personal site of Mahdi Shabani — machine learning research on explainable, uncertainty-aware models for spatial decision-making, mineral prospectivity mapping, and computer vision.">
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -22,15 +22,15 @@
 <link rel="apple-touch-icon" href="assets/favicon.png">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Mahdi Shabani — Projects, Research & Articles">
-<meta property="og:description" content="Projects, articles, and research on explainable AI, uncertainty-aware machine learning, and spatial data science.">
-<meta property="og:image" content="assets/og-image.jpg">
-<meta property="og:url" content="index.html">
+<meta property="og:title" content="Mahdi Shabani — Machine Learning & Spatial Data Science">
+<meta property="og:description" content="Explainable, uncertainty-aware machine learning for spatial decision-making — projects and research.">
+<meta property="og:image" content="https://mahdishabani.com/assets/og-image.jpg">
+<meta property="og:url" content="https://mahdishabani.com/">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Mahdi Shabani — Projects, Research & Articles">
-<meta name="twitter:description" content="Projects, articles, and research on explainable AI, uncertainty-aware machine learning, and spatial data science.">
-<meta name="twitter:image" content="assets/og-image.jpg">
+<meta name="twitter:title" content="Mahdi Shabani — Machine Learning & Spatial Data Science">
+<meta name="twitter:description" content="Explainable, uncertainty-aware machine learning for spatial decision-making — projects and research.">
+<meta name="twitter:image" content="https://mahdishabani.com/assets/og-image.jpg">
 
 <style>
 /* =========================================================
@@ -651,7 +651,6 @@ body{
   *{ transition: none !important; animation: none !important; }
 }
 </style>
-<script src="site.js?v=20261021"></script>
 </head>
 <body>
 
@@ -659,6 +658,7 @@ body{
 
   <header class="site-header">
     <a href="index.html" class="mark">M. Shabani</a>
+    <a href="ideas.html" class="more-link" style="margin:0 16px 0 auto">Ideas</a>
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
       <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
       <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
@@ -666,13 +666,17 @@ body{
   </header>
 
   <section class="hero">
-    <p class="eyebrow" id="hero-eyebrow">Projects · Research · Articles</p>
+    <p class="eyebrow" id="hero-eyebrow">Machine Learning · Spatial Data Science</p>
     <h1 id="hero-name">Mahdi Shabani</h1>
     <p class="tagline" id="hero-tagline">
       Researching explainable, uncertainty-aware machine learning for spatial decision‑making —
       from mineral prospectivity mapping to computer‑vision classification.
     </p>
- </section>
+    <a class="cv-btn" id="hero-cv" href="#" title="Add your CV file or link here">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+      Download CV
+    </a>
+  </section>
 
   <main class="grid">
 
@@ -716,6 +720,40 @@ body{
 
   </main>
 
+  <!-- About -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>About</h2>
+    </div>
+    <p class="about-text" id="about-bio"></p>
+    <div class="approach-row" id="approach-row"></div>
+    <div class="career-strip" id="career-strip"></div>
+  </section>
+
+  <!-- Skills & Tools -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>Skills &amp; Tools</h2>
+    </div>
+    <div id="skills-categories"></div>
+  </section>
+
+  <!-- Research Interests -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>Research Interests</h2>
+    </div>
+    <div class="skills-row" id="research-interests-row"></div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>Education &amp; Experience</h2>
+    </div>
+    <div class="timeline" id="timeline-list"></div>
+  </section>
+
   <!-- Contact form -->
   <section class="section reveal">
     <div class="section-head">
@@ -758,7 +796,7 @@ body{
 // Fallback content, used only if content.json can't be fetched (e.g. opened via file://)
 const FALLBACK_CONTENT = {
   "profile": { "name": "Mahdi Shabani", "eyebrow": "Machine Learning · Spatial Data Science",
-    "tagline": "Projects, research, and articles on explainable AI, uncertainty-aware machine learning, and spatial data science.",
+    "tagline": "Researching explainable, uncertainty-aware machine learning for spatial decision-making.",
     "shortBio": "", "cvUrl": "", "linkedin": "https://www.linkedin.com/in/mahdi-shabani1/", "email": "mshabani544@gmail.com" },
   "skills": {},
   "projects": [],
@@ -773,10 +811,10 @@ async function loadContent(){
   try{
     const res = await fetch('content.json', { cache: 'no-store' });
     if(!res.ok) throw new Error('bad response');
-    return window.SiteI18n.localizeContent(await res.json());
+    return await res.json();
   }catch(e){
     console.warn('Could not load content.json, using fallback content.', e);
-    return window.SiteI18n.localizeContent(FALLBACK_CONTENT);
+    return FALLBACK_CONTENT;
   }
 }
 
@@ -802,6 +840,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const contact = data.contact || {};
   const email = p.email || contact.email;
   const linkedin = p.linkedin || contact.linkedin;
+  const cvUrl = p.cvUrl || contact.cv;
 
   document.getElementById('hero-eyebrow').textContent = p.eyebrow || '';
   document.getElementById('hero-name').textContent = p.name || '';
@@ -809,6 +848,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('profile-name').textContent = p.name || '';
   document.getElementById('footer-name').textContent = p.name || '';
   document.title = (p.name ? p.name + ' — ' : '') + (p.eyebrow || '');
+
+  const cv = document.getElementById('hero-cv');
+  if(cvUrl){ cv.href = cvUrl; cv.target = '_blank'; cv.rel = 'noopener'; cv.removeAttribute('title'); }
 
   const li = document.getElementById('profile-linkedin');
   if(linkedin) li.href = linkedin;
@@ -850,6 +892,94 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  // ---- About: bio + approach chips + career direction strip ----
+  const bioEl = document.getElementById('about-bio');
+  const bioText = p.shortBio || p.tagline || '';
+  if(bioText) bioEl.textContent = bioText; else bioEl.style.display = 'none';
+
+  const approachRow = document.getElementById('approach-row');
+  const identity = data.professionalIdentity || {};
+  (identity.approach || []).forEach(a => {
+    const span = document.createElement('span');
+    span.className = 'approach-chip';
+    span.textContent = a;
+    approachRow.appendChild(span);
+  });
+
+  const careerStrip = document.getElementById('career-strip');
+  const career = data.careerDirection;
+  if(career && (career.current || career.next || career.longTerm)){
+    const stages = [
+      ['Now', career.current],
+      ['Next', career.next],
+      ['Long-term', career.longTerm]
+    ].filter(([, v]) => v);
+    stages.forEach(([label, value], i) => {
+      const stage = document.createElement('div');
+      stage.className = 'stage';
+      stage.innerHTML = `<span class="label">${escapeHtml(label)}</span><span class="value">${escapeHtml(value)}</span>`;
+      careerStrip.appendChild(stage);
+      if(i < stages.length - 1){
+        const sep = document.createElement('span');
+        sep.className = 'sep';
+        sep.textContent = '→';
+        careerStrip.appendChild(sep);
+      }
+    });
+  } else {
+    careerStrip.style.display = 'none';
+  }
+
+  // Hide the whole About section if there's really nothing to show
+  if(!bioText && !(identity.approach || []).length && !career){
+    document.getElementById('about-bio').closest('section').style.display = 'none';
+  }
+
+  // ---- Skills: supports either a flat array or a categorized object ----
+  const skillsWrap = document.getElementById('skills-categories');
+  if (Array.isArray(data.skills)) {
+    const row = document.createElement('div');
+    row.className = 'skills-row';
+    data.skills.forEach(s => {
+      const span = document.createElement('span');
+      span.className = 'skill-chip';
+      span.textContent = s;
+      row.appendChild(span);
+    });
+    skillsWrap.appendChild(row);
+  } else if (data.skills && typeof data.skills === 'object') {
+    Object.entries(data.skills).forEach(([category, list]) => {
+      if(!Array.isArray(list) || !list.length) return;
+      const cat = document.createElement('div');
+      cat.className = 'skill-category';
+      const row = document.createElement('div');
+      row.className = 'skills-row';
+      list.forEach(s => {
+        const span = document.createElement('span');
+        span.className = 'skill-chip';
+        span.textContent = s;
+        row.appendChild(span);
+      });
+      cat.innerHTML = `<p class="cat-label">${escapeHtml(humanizeKey(category))}</p>`;
+      cat.appendChild(row);
+      skillsWrap.appendChild(cat);
+    });
+  }
+
+  // ---- Research interests ----
+  const riRow = document.getElementById('research-interests-row');
+  const riSection = riRow.closest('section');
+  if((data.researchInterests || []).length){
+    data.researchInterests.forEach(r => {
+      const span = document.createElement('span');
+      span.className = 'skill-chip';
+      span.textContent = r;
+      riRow.appendChild(span);
+    });
+  } else {
+    riSection.style.display = 'none';
+  }
+
   // ---- Projects (home preview, up to 3) ----
   const projList = document.getElementById('projects-list');
   (data.projects || []).slice(0, 3).forEach((proj, i) => {
@@ -867,7 +997,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     resList.appendChild(li);
   });
 
-  if (window.SiteI18n) window.SiteI18n.updateDocumentMeta();
+  // ---- Timeline (falls back to `education` array if `timeline` is absent) ----
+  const tl = document.getElementById('timeline-list');
+  const timelineData = (data.timeline && data.timeline.length)
+    ? data.timeline
+    : (data.education || []).map(e => ({ period: e.period, title: e.degree, org: e.field }));
+  timelineData.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'timeline-item';
+    const orgLine = item.focus ? `${escapeHtml(item.org)} — ${escapeHtml(item.focus)}` : escapeHtml(item.org);
+    div.innerHTML = `<p class="t-period">${escapeHtml(item.period)}</p><h3>${escapeHtml(item.title)}</h3><p>${orgLine}</p>`;
+    tl.appendChild(div);
+  });
 });
 </script>
 <script>

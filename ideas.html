@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){try{var s=localStorage.getItem('site-theme');if(s==='dark'||s==='light')document.documentElement.setAttribute('data-theme',s);}catch(e){}})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideas — AI Opportunities in Mining | Mahdi Shabani</title>
+<meta name="description" content="Research ideas where AI could change mining, grouped by exploration, planning, operations, processing, environment and supply chain.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="style.css">
+<style>
+a.entry{display:block;text-decoration:none;color:inherit}
+.cat-intro{text-align:center;color:var(--secondary);max-width:560px;margin:-22px auto 26px;font-size:.92rem}
+.note{font-size:.86rem;color:var(--secondary);border-left:2px solid var(--gold);padding-left:14px;max-width:640px;line-height:1.65}
+.badge.s-Under-explored{color:var(--gold-deep);background:var(--gold-tint)}
+.badge.s-Emerging,.badge.s-To{color:var(--secondary);background:var(--fill)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <a href="index.html" class="mark">M. Shabani</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
+    </button>
+  </header>
+
+  <div class="page-header">
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>Back home</a>
+    <h1>Ideas</h1>
+    <p>Where AI could change mining, by stage of the mine life cycle. Pick an idea to read the problem, approach and evidence.</p>
+    <p class="note" id="note"></p>
+  </div>
+
+  <main id="cats"></main>
+
+  <footer class="site-footer">© <span id="year"></span> <span id="footer-name">Mahdi Shabani</span>. All rights reserved.</footer>
+</div>
+
+<script>
+function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('theme-toggle').addEventListener('click',()=>{
+  const r=document.documentElement,n=r.getAttribute('data-theme')==='dark'?'light':'dark';
+  r.setAttribute('data-theme',n);try{localStorage.setItem('site-theme',n);}catch(e){}
+});
+(async()=>{
+  const root=document.getElementById('cats');
+  try{
+    const res=await fetch('ideas.json',{cache:'no-store'});
+    if(!res.ok)throw 0;
+    const data=await res.json();
+    document.getElementById('note').innerHTML='<strong>How to read the labels.</strong> "Under-explored" and "Emerging" mean my web search (as of '+esc(data.updated)+') found little or early work. "To verify" means I did not confirm it. None of these is a guarantee that nobody has worked on it, so check the literature before claiming novelty.';
+    data.categories.forEach(c=>{
+      const sec=document.createElement('section');
+      sec.className='section';sec.id=c.id;
+      sec.innerHTML='<div class="section-head"><h2>'+esc(c.title)+'</h2><p>'+esc(c.description)+'</p></div><div class="entry-list" style="padding-bottom:0"></div>';
+      const list=sec.querySelector('.entry-list');
+      c.ideas.forEach(i=>{
+        const a=document.createElement('a');
+        a.className='entry';a.href='idea.html?id='+encodeURIComponent(i.id);
+        a.innerHTML='<div class="badge-row"><span class="badge s-'+esc(i.status.split(' ')[0])+'">'+esc(i.status)+'</span></div><h3>'+esc(i.title)+'</h3><p class="desc">'+esc(i.summary)+'</p>';
+        list.appendChild(a);
+      });
+      root.appendChild(sec);
+    });
+  }catch(e){
+    root.innerHTML='<p class="note">Could not load ideas.json. Open the site through a local server or GitHub Pages, not by double-clicking the file.</p>';
+  }
+})();
+</script>
+</body>
+</html>

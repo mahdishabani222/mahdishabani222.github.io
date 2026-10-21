@@ -36,23 +36,23 @@
 /* =========================================================
    Mahdi Shabani — Personal Site
    Design language: calm luxury — misty cool neutrals
-   + warm gold/bronze accent, serif display type
+   + blue accent from the reference site, serif display type
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@300;400;500;600&family=Vazirmatn:wght@400;500;600&display=swap');
 
 :root{
-  /* color — misty cool neutral base + warm gold accent */
-  --bg:        #F4F6F8;
-  --surface:   #FFFFFF;
-  --ink:       #2A3138;
-  --secondary: #7C8791;
-  --hairline:  #DEE4E9;
-  --fill:      #ECF0F3;
+  /* color — cool blue-grey base + blue accent (from reference site) */
+  --bg:        #DFE6F0;
+  --surface:   #F8FBFD;
+  --ink:       #101419;
+  --secondary: #5A6575;
+  --hairline:  #C3CEDE;
+  --fill:      #EBF0F7;
 
-  --gold:       #B08A4E;
-  --gold-deep:  #8F6C36;
-  --gold-tint:  #F1E6D2;
+  --accent:       #2A78D6;
+  --accent-deep:  #1F5FB0;
+  --accent-tint:  #DFEBF8;
 
   --shadow:       0 1px 2px rgba(42,49,56,.03), 0 14px 34px -18px rgba(42,49,56,.12);
   --shadow-hover: 0 1px 2px rgba(42,49,56,.04), 0 26px 50px -20px rgba(42,49,56,.16);
@@ -70,16 +70,16 @@
 }
 
 [data-theme="dark"]{
-  --bg:        #12161B;
-  --surface:   #1B2027;
-  --ink:       #EDEFF2;
-  --secondary: #98A2AB;
-  --hairline:  #2A3038;
-  --fill:      #232933;
+  --bg:        #14171C;
+  --surface:   #1B2028;
+  --ink:       #EEF1F6;
+  --secondary: #9AA5B4;
+  --hairline:  #2A3340;
+  --fill:      #232A35;
 
-  --gold:       #D4B073;
-  --gold-deep:  #E6C88E;
-  --gold-tint:  #3A3122;
+  --accent:       #5B9CF0;
+  --accent-deep:  #8DB8F5;
+  --accent-tint:  #1F2F47;
 
   --shadow:       0 1px 2px rgba(0,0,0,.3), 0 14px 34px -18px rgba(0,0,0,.5);
   --shadow-hover: 0 1px 2px rgba(0,0,0,.35), 0 26px 50px -20px rgba(0,0,0,.6);
@@ -136,7 +136,7 @@ body{
   color: var(--ink);
   transition: background .35s var(--ease), transform .35s var(--ease);
 }
-.theme-toggle:hover{ transform: scale(1.06); background: var(--gold-tint); }
+.theme-toggle:hover{ transform: scale(1.06); background: var(--accent-tint); }
 .theme-toggle svg{ width: 16px; height: 16px; }
 .theme-toggle .moon{ display: none; }
 [data-theme="dark"] .theme-toggle .sun{ display: none; }
@@ -153,7 +153,7 @@ body{
   font-weight: 500;
   letter-spacing: .05em;
   text-transform: uppercase;
-  color: var(--gold-deep);
+  color: var(--accent-deep);
   margin: 0 0 20px;
 }
 
@@ -182,15 +182,15 @@ body{
   gap: 8px;
   padding: 14px 30px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
-  color: #FFFDF8;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #FFFFFF;
   text-decoration: none;
   font-size: .92rem;
   font-weight: 500;
-  box-shadow: 0 10px 26px -12px rgba(176,138,78,.45);
+  box-shadow: 0 10px 26px -12px rgba(42,120,214,.40);
   transition: transform .35s var(--ease), box-shadow .35s var(--ease);
 }
-.cv-btn:hover{ transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(176,138,78,.55); }
+.cv-btn:hover{ transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(42,120,214,.50); }
 .cv-btn svg{ width: 15px; height: 15px; }
 
 /* ---------- box grid ---------- */
@@ -219,7 +219,7 @@ body{
 .box:hover{
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--gold-tint);
+  border-color: var(--accent-tint);
 }
 
 .box h2{
@@ -238,7 +238,7 @@ body{
   height: 120px;
   border-radius: 50%;
   padding: 3px;
-  background: linear-gradient(135deg, var(--gold-tint), var(--hairline));
+  background: linear-gradient(135deg, var(--accent-tint), var(--hairline));
   margin-bottom: 24px;
 }
 .avatar-ring img{
@@ -282,8 +282,8 @@ body{
 }
 .icon-link:hover{
   transform: translateY(-2px);
-  background: var(--gold-tint);
-  border-color: var(--gold);
+  background: var(--accent-tint);
+  border-color: var(--accent);
 }
 .icon-link svg{ width: 18px; height: 18px; }
 
@@ -313,7 +313,7 @@ body{
   line-height: 1.5;
   transition: color .35s var(--ease), gap .35s var(--ease);
 }
-.item-list a:hover{ color: var(--gold-deep); gap: 18px; }
+.item-list a:hover{ color: var(--accent-deep); gap: 18px; }
 .item-list a .arrow{ flex: none; width: 14px; height: 14px; opacity: .45; transition: transform .4s var(--ease), opacity .4s var(--ease); }
 .item-list a:hover .arrow{ transform: translateX(-3px); opacity: .9; }
 .item-list a:hover .arrow.rtl{ transform: translateX(3px); }
@@ -331,7 +331,7 @@ body{
   text-decoration: none;
   transition: color .35s var(--ease);
 }
-.more-link:hover{ color: var(--gold-deep); }
+.more-link:hover{ color: var(--accent-deep); }
 .more-link svg{ width: 13px; height: 13px; }
 
 /* ---------- footer ---------- */
@@ -355,7 +355,7 @@ body{
   margin-bottom: 32px;
   transition: color .35s var(--ease);
 }
-.back-link:hover{ color: var(--gold-deep); }
+.back-link:hover{ color: var(--accent-deep); }
 .back-link svg{ width: 13px; height: 13px; }
 
 .page-header h1{
@@ -377,7 +377,7 @@ body{
   box-shadow: var(--shadow);
   transition: box-shadow .45s var(--ease), transform .45s var(--ease), border-color .45s var(--ease);
 }
-.entry:hover{ transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--gold-tint); }
+.entry:hover{ transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--accent-tint); }
 .entry h3{
   font-family: var(--font-display);
   font-size: 1.28rem;
@@ -390,8 +390,8 @@ body{
   display: inline-block;
   font-size: .72rem;
   font-weight: 500;
-  color: var(--gold-deep);
-  background: var(--gold-tint);
+  color: var(--accent-deep);
+  background: var(--accent-tint);
   border-radius: 999px;
   padding: 4px 13px;
   margin-bottom: 14px;
@@ -437,12 +437,12 @@ body{
   display:inline-block;
   font-size:.72rem;
   font-weight:500;
-  color: var(--gold-deep);
-  background: var(--gold-tint);
+  color: var(--accent-deep);
+  background: var(--accent-tint);
   border-radius:999px;
   padding:4px 13px;
 }
-.badge.status-badge{ color: var(--gold-deep); background: var(--gold-tint); }
+.badge.status-badge{ color: var(--accent-deep); background: var(--accent-tint); }
 .badge.domain-badge{ color: var(--secondary); background: transparent; border:1px solid var(--hairline); }
 
 .tech-tags{ display:flex; flex-wrap:wrap; gap:7px; margin: 14px 0; }
@@ -457,12 +457,12 @@ body{
 .impact-line{
   font-size:.89rem;
   color: var(--ink);
-  border-left: 2px solid var(--gold);
+  border-left: 2px solid var(--accent);
   padding-left: 15px;
   margin-top: 18px;
   line-height: 1.65;
 }
-[dir="rtl"] .impact-line{ border-left:none; border-right:2px solid var(--gold); padding-left:0; padding-right:15px; }
+[dir="rtl"] .impact-line{ border-left:none; border-right:2px solid var(--accent); padding-left:0; padding-right:15px; }
 
 .entry-sub{ color: var(--secondary); font-size: .96rem; margin: -4px 0 14px; }
 
@@ -481,8 +481,8 @@ body{
   display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom: 40px;
 }
 .approach-chip{
-  font-size:.78rem; font-weight:500; color: var(--gold-deep);
-  background: var(--gold-tint); border-radius:999px; padding:6px 15px;
+  font-size:.78rem; font-weight:500; color: var(--accent-deep);
+  background: var(--accent-tint); border-radius:999px; padding:6px 15px;
 }
 
 .career-strip{
@@ -502,7 +502,7 @@ body{
   background: var(--surface);
   min-width: 170px;
 }
-.career-strip .stage .label{ font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color: var(--gold-deep); }
+.career-strip .stage .label{ font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color: var(--accent-deep); }
 .career-strip .stage .value{ font-size:.86rem; color: var(--ink); font-weight:500; text-align:center; }
 .career-strip .sep{ color: var(--hairline); font-size:1.2rem; }
 @media (max-width: 640px){ .career-strip .sep{ display:none; } }
@@ -516,7 +516,7 @@ body{
   font-style: italic;
   font-size:.95rem;
   font-weight:500;
-  color: var(--gold-deep);
+  color: var(--accent-deep);
   margin: 0 0 14px;
 }
 
@@ -539,7 +539,7 @@ body{
   color: var(--ink);
   transition: background .35s var(--ease), border-color .35s var(--ease);
 }
-.skill-chip:hover{ background: var(--gold-tint); border-color: var(--gold); }
+.skill-chip:hover{ background: var(--accent-tint); border-color: var(--accent); }
 .skill-chip .dot{ display: none; }
 
 /* timeline */
@@ -563,13 +563,13 @@ body{
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 0 4px var(--gold-tint);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-tint);
 }
 .timeline-item .t-period{
   font-size: .76rem;
   font-weight: 500;
-  color: var(--gold-deep);
+  color: var(--accent-deep);
   margin: 0 0 6px;
 }
 .timeline-item h3{
@@ -621,7 +621,7 @@ body{
 .form-row textarea:focus{
   outline: none;
   background: var(--surface);
-  box-shadow: 0 0 0 2px var(--gold);
+  box-shadow: 0 0 0 2px var(--accent);
 }
 .form-submit{
   display: inline-flex;
@@ -629,16 +629,16 @@ body{
   gap: 8px;
   padding: 14px 30px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
-  color: #FFFDF8;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #FFFFFF;
   border: none;
   font-size: .9rem;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 10px 26px -12px rgba(176,138,78,.45);
+  box-shadow: 0 10px 26px -12px rgba(42,120,214,.40);
   transition: transform .35s var(--ease), box-shadow .35s var(--ease);
 }
-.form-submit:hover{ transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(176,138,78,.55); }
+.form-submit:hover{ transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(42,120,214,.50); }
 .form-note{
   font-size: .78rem;
   color: var(--secondary);
@@ -719,40 +719,6 @@ body{
     </div>
 
   </main>
-
-  <!-- About -->
-  <section class="section reveal">
-    <div class="section-head">
-      <h2>About</h2>
-    </div>
-    <p class="about-text" id="about-bio"></p>
-    <div class="approach-row" id="approach-row"></div>
-    <div class="career-strip" id="career-strip"></div>
-  </section>
-
-  <!-- Skills & Tools -->
-  <section class="section reveal">
-    <div class="section-head">
-      <h2>Skills &amp; Tools</h2>
-    </div>
-    <div id="skills-categories"></div>
-  </section>
-
-  <!-- Research Interests -->
-  <section class="section reveal">
-    <div class="section-head">
-      <h2>Research Interests</h2>
-    </div>
-    <div class="skills-row" id="research-interests-row"></div>
-  </section>
-
-  <!-- Timeline -->
-  <section class="section reveal">
-    <div class="section-head">
-      <h2>Education &amp; Experience</h2>
-    </div>
-    <div class="timeline" id="timeline-list"></div>
-  </section>
 
   <!-- Contact form -->
   <section class="section reveal">
@@ -892,94 +858,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // ---- About: bio + approach chips + career direction strip ----
-  const bioEl = document.getElementById('about-bio');
-  const bioText = p.shortBio || p.tagline || '';
-  if(bioText) bioEl.textContent = bioText; else bioEl.style.display = 'none';
-
-  const approachRow = document.getElementById('approach-row');
-  const identity = data.professionalIdentity || {};
-  (identity.approach || []).forEach(a => {
-    const span = document.createElement('span');
-    span.className = 'approach-chip';
-    span.textContent = a;
-    approachRow.appendChild(span);
-  });
-
-  const careerStrip = document.getElementById('career-strip');
-  const career = data.careerDirection;
-  if(career && (career.current || career.next || career.longTerm)){
-    const stages = [
-      ['Now', career.current],
-      ['Next', career.next],
-      ['Long-term', career.longTerm]
-    ].filter(([, v]) => v);
-    stages.forEach(([label, value], i) => {
-      const stage = document.createElement('div');
-      stage.className = 'stage';
-      stage.innerHTML = `<span class="label">${escapeHtml(label)}</span><span class="value">${escapeHtml(value)}</span>`;
-      careerStrip.appendChild(stage);
-      if(i < stages.length - 1){
-        const sep = document.createElement('span');
-        sep.className = 'sep';
-        sep.textContent = '→';
-        careerStrip.appendChild(sep);
-      }
-    });
-  } else {
-    careerStrip.style.display = 'none';
-  }
-
-  // Hide the whole About section if there's really nothing to show
-  if(!bioText && !(identity.approach || []).length && !career){
-    document.getElementById('about-bio').closest('section').style.display = 'none';
-  }
-
-  // ---- Skills: supports either a flat array or a categorized object ----
-  const skillsWrap = document.getElementById('skills-categories');
-  if (Array.isArray(data.skills)) {
-    const row = document.createElement('div');
-    row.className = 'skills-row';
-    data.skills.forEach(s => {
-      const span = document.createElement('span');
-      span.className = 'skill-chip';
-      span.textContent = s;
-      row.appendChild(span);
-    });
-    skillsWrap.appendChild(row);
-  } else if (data.skills && typeof data.skills === 'object') {
-    Object.entries(data.skills).forEach(([category, list]) => {
-      if(!Array.isArray(list) || !list.length) return;
-      const cat = document.createElement('div');
-      cat.className = 'skill-category';
-      const row = document.createElement('div');
-      row.className = 'skills-row';
-      list.forEach(s => {
-        const span = document.createElement('span');
-        span.className = 'skill-chip';
-        span.textContent = s;
-        row.appendChild(span);
-      });
-      cat.innerHTML = `<p class="cat-label">${escapeHtml(humanizeKey(category))}</p>`;
-      cat.appendChild(row);
-      skillsWrap.appendChild(cat);
-    });
-  }
-
-  // ---- Research interests ----
-  const riRow = document.getElementById('research-interests-row');
-  const riSection = riRow.closest('section');
-  if((data.researchInterests || []).length){
-    data.researchInterests.forEach(r => {
-      const span = document.createElement('span');
-      span.className = 'skill-chip';
-      span.textContent = r;
-      riRow.appendChild(span);
-    });
-  } else {
-    riSection.style.display = 'none';
-  }
-
   // ---- Projects (home preview, up to 3) ----
   const projList = document.getElementById('projects-list');
   (data.projects || []).slice(0, 3).forEach((proj, i) => {
@@ -997,18 +875,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     resList.appendChild(li);
   });
 
-  // ---- Timeline (falls back to `education` array if `timeline` is absent) ----
-  const tl = document.getElementById('timeline-list');
-  const timelineData = (data.timeline && data.timeline.length)
-    ? data.timeline
-    : (data.education || []).map(e => ({ period: e.period, title: e.degree, org: e.field }));
-  timelineData.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'timeline-item';
-    const orgLine = item.focus ? `${escapeHtml(item.org)} — ${escapeHtml(item.focus)}` : escapeHtml(item.org);
-    div.innerHTML = `<p class="t-period">${escapeHtml(item.period)}</p><h3>${escapeHtml(item.title)}</h3><p>${orgLine}</p>`;
-    tl.appendChild(div);
-  });
 });
 </script>
 <script>

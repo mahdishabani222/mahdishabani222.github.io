@@ -39,17 +39,16 @@
     }
   ];
 
-  function createLink(network, showLabel) {
+  function createLink(network) {
     const link = document.createElement('a');
     link.href = network.url;
     link.dataset.social = network.key;
-    link.className = showLabel ? 'social-link' : 'icon-link';
+    link.className = 'icon-link';
     if (network.key !== 'email') {
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
     }
     link.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + network.icon + '</svg>';
-    if (showLabel) link.appendChild(document.createElement('span'));
     return link;
   }
 
@@ -60,29 +59,21 @@
       if (!network) return;
       link.setAttribute('aria-label', network[language]);
       link.title = network[language];
-      const label = link.querySelector('span');
-      if (label) label.textContent = network[language];
     });
-    const navigation = document.getElementById('social-links');
-    if (navigation) navigation.setAttribute('aria-label', language === 'fa' ? 'راه‌های ارتباط با مهدی شعبانی' : 'Connect with Mahdi Shabani');
   }
 
   function initialize() {
-    if (document.getElementById('social-links')) return;
+    const profileRow = document.querySelector('.profile-box .icon-row');
+    if (!profileRow || document.getElementById('social-links-styles')) return;
     const style = document.createElement('style');
+    style.id = 'social-links-styles';
     style.textContent = `
       .profile-box .icon-row{flex-wrap:wrap;justify-content:center}
       .profile-box .icon-link{flex-shrink:0}
-      .social-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:36px auto 0}
-      .social-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 14px;border:1px solid var(--hairline,#c3cede);border-radius:24px;color:var(--ink,#101419);background:var(--surface,#f8fbfd);text-decoration:none;font:inherit;font-size:.85rem;transition:background .2s,border-color .2s}
-      .social-link svg{width:19px;height:19px;flex-shrink:0}
-      .social-link:hover{background:var(--accent-tint,#dfebf8);border-color:var(--accent,#2a78d6)}
-      .social-link:focus-visible,.profile-box .icon-link:focus-visible{outline:2px solid var(--accent,#2a78d6);outline-offset:4px}
-      .social-links+.site-footer{margin-top:24px}
+      .profile-box .icon-link:focus-visible{outline:2px solid var(--accent,#2a78d6);outline-offset:4px}
     `;
     document.head.appendChild(style);
 
-    const profileRow = document.querySelector('.profile-box .icon-row');
     if (profileRow) {
       const additions = document.createDocumentFragment();
       networks.forEach(network => {
@@ -95,7 +86,7 @@
             existing.rel = 'noopener noreferrer';
           }
         } else {
-          const link = createLink(network, false);
+          const link = createLink(network);
           link.id = 'profile-' + network.key;
           additions.appendChild(link);
         }
@@ -103,14 +94,6 @@
       profileRow.prepend(additions);
     }
 
-    const footer = document.querySelector('.site-footer');
-    if (footer) {
-      const navigation = document.createElement('nav');
-      navigation.id = 'social-links';
-      navigation.className = 'social-links';
-      networks.forEach(network => navigation.appendChild(createLink(network, true)));
-      footer.before(navigation);
-    }
     updateLabels();
     const observer = new MutationObserver(updateLabels);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
